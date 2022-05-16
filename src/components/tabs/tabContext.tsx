@@ -1,9 +1,14 @@
 import * as React from 'react';
 
+export type ElementNodeType = React.ReactNode & {
+  index: string | number 
+  title: string
+}
+
 type TabsContextProps = {
-  nodes: React.ReactNode[],
+  nodes: ElementNodeType[],
   current: number | string, 
-  scrollable: boolean,
+  containerWidth: number,
   onChange: (value: number | string) => void
 }
 

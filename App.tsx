@@ -139,8 +139,28 @@ export default function App() {
         <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
         <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
         <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-
       </Tabs>
+
+      <View style={{margin: 20}}>
+        <Tabs scrollable animated>
+          <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
+          <Tabs.Pane title="哈哈哈">
+            <View style={{ backgroundColor: 'blue', height: 88}}>
+              <Text>hahhahhahah1231231231231232111111111</Text>
+            </View>
+          </Tabs.Pane>
+          <Tabs.Pane title="水果">
+            <View style={{ backgroundColor: 'green'}}>
+              <Text>hahhahhahah1231231231231232111111111</Text>
+              <Text>水果</Text>
+            </View>
+          </Tabs.Pane>
+          <Tabs.Pane title="菠萝"><Text>菠萝</Text></Tabs.Pane>
+          <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
+          <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
+          <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
+        </Tabs>
+      </View>
     </ScrollView>
   );
 }

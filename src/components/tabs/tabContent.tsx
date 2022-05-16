@@ -1,25 +1,27 @@
 import * as React from 'react';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { View, Text, LayoutChangeEvent } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useContext } from 'react';
+import { View } from 'react-native'
+import Animated from 'react-native-reanimated';
 import styles from './styles';
 import TabsContext from './tabContext';
 import useSwipe from './useSwipe';
 
-const TabContent = () => {
-  const { nodes, current, onChange } = useContext(TabsContext);
-  const { panResponder, style, onLayout, containerWidth } = useSwipe({ 
-    current: current,
-    nodes: nodes,
-    onChange: onChange
-  });
+interface TabContentProps {
+  animated: boolean
+}
+
+const TabContent: React.FC<TabContentProps> = (props: TabContentProps) => {
+  const { animated } = props;
+  const { nodes, current, onChange, containerWidth } = useContext(TabsContext);
+  const { panResponder, style } = useSwipe({ animated });
+  const panResponderRes = animated ? { ...panResponder.panHandlers } : {}
 
   return (
-    <View style={styles['tabs-content']} onLayout={onLayout} >
+    <View style={styles['tabs-content']} >
       {/* @ts-ignore */}
       <Animated.View 
         style={[styles['tabs-content-container'], style]}
-        {...panResponder.panHandlers}
+        {...panResponderRes}
       >
         {
           nodes.map((_item: any) => {

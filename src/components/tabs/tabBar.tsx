@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, LayoutChangeEvent, TouchableOpacity, ScrollView } from 'react-native';
+import { useContext, useEffect, useRef } from 'react';
+import { View, Text, LayoutChangeEvent, TouchableOpacity } from 'react-native';
 import Animated, { useAnimatedRef, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming, scrollTo } from 'react-native-reanimated';
 import TabsContext from './tabContext';
 import styles from './styles';
@@ -11,6 +11,10 @@ type TabItemPositionType = {
   key: number| string
 }
 
+interface TabBarProps {
+  scrollable: boolean
+}
+
 const tabItemPositionToKeyEntities = (data: any) => {
   const result: { [key in number | string]: TabItemPositionType } = {};
   data.forEach((_item: any) => {
@@ -19,13 +23,14 @@ const tabItemPositionToKeyEntities = (data: any) => {
   return result;
 }
 
-const TabBar = () => {
-  const { nodes, current, onChange, scrollable } = useContext(TabsContext);
+
+const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
+  const { scrollable } = props;
+  const { nodes, current, onChange, containerWidth } = useContext(TabsContext);
   const translateX = useSharedValue(0);
   const aref = useAnimatedRef<Animated.ScrollView>();
   const scrollX = useSharedValue(0);
   const scrollViewContentWidthRef = useRef(0)
-  const [containerWidth, setContainerWidth] = useState<number>(0);
   const tabItemPosition = useRef<TabItemPositionType[]>([]);
   const positionEntities = tabItemPositionToKeyEntities(tabItemPosition.current);
 
@@ -40,10 +45,6 @@ const TabBar = () => {
       width: currentItem?.width || 0
     }
   })
-
-  const containerOnLayout = (e: LayoutChangeEvent) => {
-    setContainerWidth(e.nativeEvent.layout.width)
-  }
 
   const tabItemOnLayout = (e: LayoutChangeEvent, params: { index: number, key: string }) => {
     const width = e.nativeEvent.layout.width;
@@ -94,8 +95,10 @@ const TabBar = () => {
       <>
         {
           nodes.map((_item: any, index) => {
+            const isActive = current === _item.index;
             return (
               <TouchableOpacity 
+                activeOpacity={1}
                 key={_item.index} 
                 style={styles['tabs-header-item']} 
                 onPress={() => handlePress(_item.index)}
@@ -104,7 +107,7 @@ const TabBar = () => {
                   style={styles['tabs-header-item-content']} 
                   onLayout={(e) => tabItemOnLayout(e, { index, key: _item.index })}
                 >
-                  <Text style={{backgroundColor: 'yellow'}}>{_item.title}</Text>
+                  <Text style={[isActive ? {color: 'blue'} : {}]}>{_item.title}</Text>
                 </View>
               </TouchableOpacity>
             )
@@ -128,7 +131,7 @@ const TabBar = () => {
   }
 
   return (
-    <View style={styles['tabs-header']} onLayout={containerOnLayout}>
+    <View style={styles['tabs-header']}>
       <>
         {renderTabBar()}
       </>

@@ -1,24 +1,23 @@
-import { useState, useEffect, useRef } from "react";
-import { LayoutChangeEvent, PanResponder } from "react-native";
+import { useState, useEffect, useRef, useContext } from "react";
+import { PanResponder } from "react-native";
 import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import TabsContext from "./tabContext";
 
 type Options = {
-  current: number | string, 
-  nodes: any,
-  onChange: any
+  animated: boolean
 }
 
 function useSwipe(options: Options) {
-  const { current, nodes, onChange } = options;
+  const { animated } = options;
+  const { nodes, current, onChange, containerWidth } = useContext(TabsContext);
   const [isTouched, setIsTouched] = useState(false);
   const [startPos, setStartPos] = useState({
     x: 0,
     y: 0,
   });
-  const [containerWidth, setContainerWidth] = useState(0);
-  const translateX = useSharedValue(0);
-  const count = nodes.length;
   const currentIndex = nodes.findIndex((_item: any) => _item.index === current);
+  const translateX = useSharedValue(-currentIndex * containerWidth);
+  const count = nodes.length;
 
   const style = useAnimatedStyle(() => {
     return {
@@ -26,17 +25,10 @@ function useSwipe(options: Options) {
     }
   });
 
-  const onLayout = (e: LayoutChangeEvent) => {
-    setContainerWidth(e.nativeEvent.layout.width)
-  }
-
   useEffect(() => {
-    if (containerWidth === 0) {
-      return
-    }
     const index = nodes.findIndex((_item: any) => _item.index === current);
-    translateX.value = withTiming(-containerWidth * index)
-  }, [current, containerWidth])
+    translateX.value = animated ?  withTiming(-containerWidth * index) : -containerWidth * index
+  }, [current])
 
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => true,
@@ -92,8 +84,7 @@ function useSwipe(options: Options) {
     }
   })
 
-
-  return { style, onLayout, panResponder, containerWidth }
+  return { style, panResponder, containerWidth }
 }
 
 export default useSwipe
