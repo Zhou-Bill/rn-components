@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Dimensions, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Animated from 'react-native-reanimated';
 import styles from './styles';
 import useSwipe from './useSwipe';
-const screenWidth = Dimensions.get('screen').width
 
 export type ButtonType = "primary" | "default" | "warning" | "danger" | "success";
 
@@ -34,9 +33,9 @@ const SwipeCell = React.forwardRef<SwipeCellRef, ISwipeCellProps>(
         close: resetToZero,
       };
     });
-  
+
     return (
-      <View style={{ overflow: 'hidden', width: screenWidth }}>
+      <View style={{ overflow: 'hidden' }}>
         {/* @ts-ignore */}
         <Animated.View 
           style={[
@@ -49,7 +48,6 @@ const SwipeCell = React.forwardRef<SwipeCellRef, ISwipeCellProps>(
             onLayout={(e) => onLayout(e, "left")}
             style={[styles['swipe-cell-actions'], styles['swipe-cell-left-actions']]}
           >
-
             {
               leftAction?.map((_item) => {
                 return (

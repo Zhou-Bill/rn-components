@@ -98,6 +98,15 @@ export default function App() {
           </View>
         </SwipeCell>
       </View>
+      <View style={{margin: 50}}>
+        <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
+          <View style={{ padding: 12 }}>
+            <Text>123</Text>
+            <Text>456</Text>
+            <Text>789</Text>
+          </View>
+        </SwipeCell>
+      </View>
       <View style={{marginTop: 20}}>
         <Switch />
       </View>

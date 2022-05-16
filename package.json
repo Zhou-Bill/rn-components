@@ -1,7 +1,7 @@
 {
-  "name": "rn-components",
-  "version": "1.0.0",
-  "main": "lib/commonjs/index.js",
+  "name": "rn-components-zzb",
+  "version": "1.0.1",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -13,13 +13,11 @@
   "dependencies": {
     "@types/react-native-vector-icons": "^6.4.10",
     "expo": "~45.0.0",
-    "expo-community-flipper": "^45.0.0",
     "expo-status-bar": "~1.3.0",
     "react": "17.0.2",
     "react-devtools-core": "^4.24.5",
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
-    "react-native-flipper": "^0.145.0",
     "react-native-gesture-handler": "2.1",
     "react-native-reanimated": "~2.8.0",
     "react-native-vector-icons": "^9.1.0",
@@ -52,5 +50,12 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhou-Bill/rn-components.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
