@@ -12,7 +12,9 @@ const SwipeItem: React.FC<ISwipeItemProps> = (props: ISwipeItemProps) => {
 
   return (
     <View style={{ width: width, height: height }}>
-      {children}
+      <>
+        {children}
+      </>
     </View>
   )
 }

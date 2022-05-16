@@ -37,6 +37,7 @@ const SwipeCell = React.forwardRef<SwipeCellRef, ISwipeCellProps>(
   
     return (
       <View style={{ overflow: 'hidden', width: screenWidth }}>
+        {/* @ts-ignore */}
         <Animated.View 
           style={[
             styles['swipe-cell'],
@@ -69,7 +70,9 @@ const SwipeCell = React.forwardRef<SwipeCellRef, ISwipeCellProps>(
             }
           </View>
           <TouchableOpacity activeOpacity={1} style={[styles['swipe-cell-children']]} onPress={resetToZero}>
-            {children}
+            <>
+              {children}
+            </>
           </TouchableOpacity>
           <View 
             onLayout={(e) => onLayout(e, "right")}

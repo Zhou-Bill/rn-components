@@ -16,6 +16,7 @@ const TabContent = () => {
 
   return (
     <View style={styles['tabs-content']} onLayout={onLayout} >
+      {/* @ts-ignore */}
       <Animated.View 
         style={[styles['tabs-content-container'], style]}
         {...panResponder.panHandlers}

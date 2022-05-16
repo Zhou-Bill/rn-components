@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, LayoutChangeEvent, Dimensions } from 'react-native'
 import styles from './styles';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming }  from 'react-native-reanimated'
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming }  from 'react-native-reanimated'
 import Icon from '../icon';
 
 interface Iprops {
@@ -69,12 +69,15 @@ const NoticeBar: React.FC<Iprops> = (props) => {
       style={[styles['notice-bar'], scrollable ? styles['scrollable-notice-bar'] : {}, !visible ? styles['notice-bar-hidden'] : {}]}
     >
       <View style={[styles['notice-bar-left-icon'], scrollable ? styles['scrollable-notice-bar-left-icon'] : {}]}>
+        <>
         {
           (leftIcon) || (
             <Icon name="notification" color="#ed6a0c" />
           )
         }
+        </>
       </View>
+      {/* @ts-ignore */}
       <Animated.View
         style={[styles['notice-content-wrap'], scrollStyle, style]}
         onLayout={handleLayout}
@@ -87,11 +90,13 @@ const NoticeBar: React.FC<Iprops> = (props) => {
             onPress={handleClose}
             style={[styles['close-icon'], scrollable ? styles['scollable-close-icon'] : {}]}
           >
+            <>
             {
               rightIcon || (
                 <Icon name="close" color="#ed6a0c" />
               )
             }
+            </>
           </TouchableOpacity>
         )
       }

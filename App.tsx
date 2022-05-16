@@ -17,7 +17,7 @@ export default function App() {
   const [tab, setTab] = React.useState(3);
 
   const handleTabChange = (key: number | string) => {
-    setTab(key);
+    setTab(key as any);
   }
 
   const handleStepperChange = (text: number | string) => {

@@ -66,9 +66,11 @@ const Switch: React.FC<Iprops> = (props: Iprops) => {
               }),
             }}
           >
-            {
-              checked ? openNode : closeNode
-            }
+            <>
+              {
+                checked ? openNode : closeNode
+              }
+            </>
           </Animated.View>
         </Animated.View>
         <Animated.View 

@@ -12,8 +12,8 @@ type TabItemPositionType = {
 }
 
 const tabItemPositionToKeyEntities = (data: any) => {
-  const result: { [key: number | string]: TabItemPositionType } = {};
-  data.forEach((_item) => {
+  const result: { [key in number | string]: TabItemPositionType } = {};
+  data.forEach((_item: any) => {
     result[_item.key] = _item;
   })
   return result;
@@ -110,6 +110,7 @@ const TabBar = () => {
             )
           })
         }
+        {/* @ts-ignore */}
         <Animated.View style={[styles['underline'], underlineStyle]} />
       </>
     )

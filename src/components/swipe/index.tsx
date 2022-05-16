@@ -130,6 +130,7 @@ const Swipe: React.FC<Iprops> & { SwipeItem: typeof SwipeItem } = (props: Iprops
       ]
     }>
       <>
+        {/* @ts-ignore */}
         <Animated.View 
           style={[
             isHorizontal 
