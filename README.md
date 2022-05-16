@@ -18,8 +18,8 @@
 
 ## 实现思路
 
-* [Swipe]('./src/components/swipe/readme.md)
-* [SwipeCell]('./src/components/swipe-cell/readme.md)
+* [Swipe](src/components/swipe/readme.md)
+* [SwipeCell](./src/components/swipe-cell/readme.md)
 
 
 ## TODO
