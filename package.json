@@ -1,7 +1,7 @@
 {
   "name": "rn-components",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "lib/commonjs/index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -31,10 +31,9 @@
     "react-native-builder-bob": "^0.18.2",
     "typescript": "~4.3.5"
   },
-  "private": true,
-  "react-native": "src\\index.tsx",
-  "module": "lib\\module\\index.js",
-  "types": "lib\\typescript\\src\\index.d.ts",
+  "react-native": "src/index.tsx",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
   "files": [
     "src",
     "lib",
