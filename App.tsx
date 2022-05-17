@@ -76,8 +76,8 @@ export default function App() {
 
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.center}>
+    <View style={styles.container}>
+      {/* <View style={styles.center}>
         <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
           <SwipeItem>
             <View style={[{ width: '100%' }]}>
@@ -148,9 +148,10 @@ export default function App() {
         <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
         <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
         <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-      </Tabs>
+      </Tabs> */}
 
       <View style={{margin: 20}}>
+        {/* <Text>123123</Text> */}
         <Tabs scrollable animated>
           <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
           <Tabs.Pane title="哈哈哈">
@@ -170,7 +171,9 @@ export default function App() {
           <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
         </Tabs>
       </View>
-    </ScrollView>
+      {/* <Text>123123</Text> */}
+
+    </View>
   );
 }
 
@@ -179,6 +182,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 50,
     backgroundColor: '#fff',
+    height: 366,
     // alignItems: 'center',
     // justifyContent: 'center',
   },

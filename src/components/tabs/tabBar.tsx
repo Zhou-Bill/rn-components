@@ -62,13 +62,15 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
     if (Object.keys(positionEntities).length === 0) {
       return;
     }
-    const currentIndex = nodes.findIndex((_item: any) => _item.index === current);
-    const currentItem = positionEntities[currentIndex]
+    const currentItem = positionEntities[current]
     const { position, width, key } = currentItem;
     const offset = position - width / 2 - containerWidth / 2 - scrollX.value;
     if (offset < 0 && -offset > scrollX.value) {
       scrollX.value = 0;
     } else {
+      // 如果向右偏移 比 整个scrollView - 视口宽度 都要场， 那么他最长的偏移值只能是他的差
+      // scrollView 内容宽度 488， 容器宽度 只有 388， 那scrollView 滚动距离只有100
+      // 你整个偏移比滚动距离还要大， 那只能偏移滚动距离
       scrollX.value += offset > scrollViewContentWidthRef.current - containerWidth 
         ? scrollViewContentWidthRef.current - containerWidth 
         : offset;

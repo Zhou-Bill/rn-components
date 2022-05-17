@@ -5,13 +5,12 @@ export default StyleSheet.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    flex: 1,
+    // backgroundColor: 'red'
   },
   'tabs-header': {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    flex: 1,
     position: 'relative',
   },
   'tabs-scrollView': {
@@ -37,19 +36,11 @@ export default StyleSheet.create({
     left: 0,
   },
   'tabs-content': {
-    display: 'flex',
-    flexDirection: 'row',
     overflow: 'hidden',
-    // backgroundColor: 'yellow',
   },
   'tabs-content-container': {
     display: 'flex',
     flexDirection: 'row',
-    // transform: [
-    //   {
-    //     translateX: -166
-    //   }
-    // ]
   },
   'tabs-content-item': {
     // width: '100%',    
