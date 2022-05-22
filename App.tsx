@@ -76,7 +76,7 @@ export default function App() {
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* <View style={styles.center}>
         <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
           <SwipeItem>
@@ -87,6 +87,20 @@ export default function App() {
           <SwipeItem>
             <View style={[{ width: '100%' }]}>
               <Image source={{uri: 'https://img2.baidu.com/it/u=2284805420,4155623739&fm=26&fmt=auto'}} style={styles['swiper-item-image']} />
+            </View>
+          </SwipeItem>
+        </Swipe>
+      </View> */}
+      <View style={styles.center}>
+        <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
+          <SwipeItem>
+            <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
+              <Text style={styles['swiper-item-image']}>123123</Text>
+            </View>
+          </SwipeItem>
+          <SwipeItem>
+            <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
+              <Text style={styles['swiper-item-image']}>swipe2</Text>
             </View>
           </SwipeItem>
         </Swipe>
@@ -148,7 +162,7 @@ export default function App() {
         <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
         <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
         <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-      </Tabs> */}
+      </Tabs>
 
       <View style={{margin: 20}}>
         {/* <Text>123123</Text> */}
@@ -173,7 +187,7 @@ export default function App() {
       </View>
       {/* <Text>123123</Text> */}
 
-    </View>
+    </ScrollView>
   );
 }
 

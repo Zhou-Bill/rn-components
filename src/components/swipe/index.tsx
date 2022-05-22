@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ReactElement, useEffect, useMemo } from "react";
-import { View, Image, Dimensions } from 'react-native'
+import { ReactElement, useMemo } from "react";
+import { View, Dimensions } from 'react-native'
 import SwipeItem, { ISwipeItemProps } from './swipe-item';
 import Animated from "react-native-reanimated";
 import styles from "./styles";
@@ -8,7 +8,7 @@ import useSwipe from "./useSwipe";
 
 const screenWidth = Dimensions.get('screen').width;
 
-interface Iprops {
+export interface SwipeProps {
   /** 初始化位置 */
   defaultIndex?: number
   width?: number,
@@ -43,7 +43,7 @@ const traverseChild = (children: React.ReactNode) => {
   return [last, ...result, first]
 }
 
-const Swipe: React.FC<Iprops> & { SwipeItem: typeof SwipeItem } = (props: Iprops) => {
+const Swipe: React.FC<SwipeProps> & { SwipeItem: typeof SwipeItem } = (props: SwipeProps) => {
   const { width = screenWidth, height = 300, direction = 'horizontal', children, onChange, renderDots, defaultIndex = 0 } = props;
   const count = React.Children.count(children)
   const isHorizontal = direction === 'horizontal';
