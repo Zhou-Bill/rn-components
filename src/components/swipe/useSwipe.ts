@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Dimensions, GestureResponderEvent } from "react-native";
+import { Dimensions, GestureResponderEvent, PanResponder } from "react-native";
 import { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 
 type Options = {
@@ -83,78 +83,79 @@ function useSwiper(options: Options) {
     }
     
   });
-
-  const onTouchStart = (e: GestureResponderEvent) => {
-    if (count <= 1) {
-      return;
-    }
-    setIsTouched(true);
-    setStartPos({
-      x: e.nativeEvent.pageX,
-      y: e.nativeEvent.pageY,
-    })
-  }
-
-  const onTouchEnd = (e: GestureResponderEvent) => {
-    if (!isTouched) {
-      return;
-    }
-    // 大于 0 向右移动
-    const isRight = direction === 'horizontal' 
-      ? e.nativeEvent.pageX - startPos.x > 0 
-      : e.nativeEvent.pageY - startPos.y > 0;
-    
-    if (!isRight) {
-      if (current === count - 1) {
-        setCurrent(0)
-        translateX.value = withTiming(-(current + 1)  * offsetXorY, {}, (finished) => {
-          if (finished) {
-            translateX.value = (0);
-          }
-        })
-        onChange?.(0)
-      } else {
-        setCurrent(current + 1);
-        translateX.value = withTiming(-(current + 1) * offsetXorY);
-        onChange?.(current + 1)
+  
+  const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: (e) => { 
+      if (count <= 1) {
+        return;
       }
-    } else {
-      // 如果是向右滑动， 那么如果当前active 是第0张图片，那么他应该回到第三张图片
-      if (current === 0) {
-        setCurrent(count - 1);
-        translateX.value = withTiming(-(current - 1) * offsetXorY, {}, (finished) => {
-          if (finished) {
-            translateX.value = -(count - 1) * offsetXorY
-          }
-        })
-        onChange?.(count - 1)
-      } else {
-        setCurrent(current - 1)
-        translateX.value = withTiming(-(current - 1) * offsetXorY)
-        onChange?.(current - 1)
-
+      setIsTouched(true);
+      setStartPos({
+        x: e.nativeEvent.pageX,
+        y: e.nativeEvent.pageY,
+      })
+    },
+    onPanResponderMove: (e) => {
+      if (!isTouched) {
+        return;
       }
+  
+      const offset = direction === 'horizontal' 
+        ? e.nativeEvent.pageX - startPos.x 
+        : e.nativeEvent.pageY - startPos.y;
+      
+      translateX.value = (-current * offsetXorY) + offset
+    },
+    onPanResponderRelease: (e) => {
+      if (!isTouched) {
+        return;
+      }
+      // 大于 0 向右移动
+      const isRight = direction === 'horizontal' 
+        ? e.nativeEvent.pageX - startPos.x > 0 
+        : e.nativeEvent.pageY - startPos.y > 0;
+      
+      if (!isRight) {
+        if (current === count - 1) {
+          setCurrent(0)
+          translateX.value = withTiming(-(current + 1)  * offsetXorY, {}, (finished) => {
+            if (finished) {
+              translateX.value = (0);
+            }
+          })
+          onChange?.(0)
+        } else {
+          setCurrent(current + 1);
+          translateX.value = withTiming(-(current + 1) * offsetXorY);
+          onChange?.(current + 1)
+        }
+      } else {
+        // 如果是向右滑动， 那么如果当前active 是第0张图片，那么他应该回到第三张图片
+        if (current === 0) {
+          setCurrent(count - 1);
+          translateX.value = withTiming(-(current - 1) * offsetXorY, {}, (finished) => {
+            if (finished) {
+              translateX.value = -(count - 1) * offsetXorY
+            }
+          })
+          onChange?.(count - 1)
+        } else {
+          setCurrent(current - 1)
+          translateX.value = withTiming(-(current - 1) * offsetXorY)
+          onChange?.(current - 1)
+  
+        }
+      }
+      setIsTouched(false);
+      setStartPos({
+        x: 0,
+        y: 0,
+      })
     }
-    setIsTouched(false);
-    setStartPos({
-      x: 0,
-      y: 0,
-    })
-  }
+  })
 
-  const onTouchMove = (e: GestureResponderEvent) => {
-    if (!isTouched) {
-      return;
-    }
-
-    const offset = direction === 'horizontal' 
-      ? e.nativeEvent.pageX - startPos.x 
-      : e.nativeEvent.pageY - startPos.y;
-    
-    translateX.value = (-current * offsetXorY) + offset
-  }
-
-  return { current, style, onTouchStart, onTouchMove, onTouchEnd }
+  return { current, style, panResponder }
 }
 
 export default useSwiper

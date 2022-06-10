@@ -26,8 +26,8 @@ describe('<Swipe />', () => {
     expect(1).toBe(1);
   });
   it('Basic Swipe', () => {
-    const {getAllByText} = render(<Basic />)
-    expect(getAllByText('123123')).toHaveLength(2)
+    const { getAllByText  } = render(<Basic />)
+    expect( getAllByText('123123') ).toHaveLength(2)
   });
  
 });

@@ -50,9 +50,7 @@ const Swipe: React.FC<SwipeProps> & { SwipeItem: typeof SwipeItem } = (props: Sw
   const { 
     style, 
     current, 
-    onTouchMove, 
-    onTouchEnd, 
-    onTouchStart 
+    panResponder
   } = useSwipe({ 
     count,
     direction,
@@ -139,9 +137,7 @@ const Swipe: React.FC<SwipeProps> & { SwipeItem: typeof SwipeItem } = (props: Sw
             style,
             directionStyle
           ]} 
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
+          {...panResponder.panHandlers}
         >
           {/* 渲染每一个swipeItem */}
           {renderChildren()}

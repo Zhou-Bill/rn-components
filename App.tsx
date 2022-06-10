@@ -8,8 +8,87 @@ import NoticeBar from './src/components/notice-bar';
 import CountDown from './src/components/count-down';
 import Stepper from './src/components/stepper';
 import Tabs from './src/components/tabs';
+import Tree from './src/components/tree/tree';
 
 const SwipeItem = Swipe.SwipeItem;
+
+const tree = [
+  {
+    key: '0',
+    title: '0',
+    children: [
+      {
+        key: '1',
+        title: '1',
+        children: [
+          {
+            key: '1-1',
+            title: '1-1',
+            children: [
+              {
+                key: '1-1-1',
+                title: '1-1-1',
+              }
+            ]
+          },
+          {
+            key: '1-2',
+            title: '1-2',
+            children: [
+              {
+                key: '1-2-1',
+                title: '1-2-1',
+              }
+            ]
+          }
+        ]
+      },
+      {
+        key: '2',
+        title: '2',
+        children: [
+          {
+            key: '2-1',
+            title: '2-1',
+            children: [
+              {
+                key: '2-1-1',
+                title: '2-1-1',
+              }
+            ]
+          },
+          {
+            key: '2-2',
+            title: '2-2',
+            children: [
+              {
+                key: '2-2-1',
+                title: '2-2-1',
+                children: [
+                  {
+                    key: '2-2-1-1',
+                    title: '2-2-1-1',
+                    children: [
+                      {
+                        key: '2-2-1-1-1',
+                        title: '2-2-1-1-1',
+                      }
+                    ]
+                  }
+                ],
+              },
+              {
+                key: '2-2-2',
+                title: '2-2-2',
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  
+]
 
 export default function App() {
   const ref = useRef<SwipeCellRef>(null);
@@ -73,11 +152,9 @@ export default function App() {
     }
   ]
 
-
-
   return (
     <ScrollView style={styles.container}>
-      {/* <View style={styles.center}>
+      <View style={styles.center}>
         <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
           <SwipeItem>
             <View style={[{ width: '100%' }]}>
@@ -90,7 +167,7 @@ export default function App() {
             </View>
           </SwipeItem>
         </Swipe>
-      </View> */}
+      </View>
       <View style={styles.center}>
         <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
           <SwipeItem>
@@ -186,7 +263,7 @@ export default function App() {
         </Tabs>
       </View>
       {/* <Text>123123</Text> */}
-
+      <Tree treeData={tree} />
     </ScrollView>
   );
 }
