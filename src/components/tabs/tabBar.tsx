@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, LayoutChangeEvent, TouchableOpacity } from 'react-native';
 import Animated, { useAnimatedRef, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming, scrollTo } from 'react-native-reanimated';
 import TabsContext from './tabContext';
@@ -8,18 +8,31 @@ import styles from './styles';
 type TabItemPositionType = {
   position: number,
   width: number,
-  key: number| string
+  key: number| string,
+  index: number
 }
 
 interface TabBarProps {
   scrollable: boolean
 }
 
-const tabItemPositionToKeyEntities = (data: any) => {
+const tabItemPositionToKeyEntities = (data: any, length: number) => {
   const result: { [key in number | string]: TabItemPositionType } = {};
-  data.forEach((_item: any) => {
-    result[_item.key] = _item;
-  })
+  if (data.length < length) {
+    return result;
+  }
+  const list = [...data];
+  list.sort((a, b) => a.index - b.index);
+  for (let i = 0; i < list.length; i++) {
+    const position = i === 0 ?  0 : list[i - 1].position;
+    const { key, ...rest } = list[i];
+    list[i].position = position + rest.width
+    result[key] = {
+      ...rest,
+      key: key,
+      position: position + rest.width,
+    }
+  }
   return result;
 }
 
@@ -31,8 +44,8 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
   const aref = useAnimatedRef<Animated.ScrollView>();
   const scrollX = useSharedValue(0);
   const scrollViewContentWidthRef = useRef(0)
-  const tabItemPosition = useRef<TabItemPositionType[]>([]);
-  const positionEntities = tabItemPositionToKeyEntities(tabItemPosition.current);
+  const [tabItemPosition, setTabItemPosition] = useState<TabItemPositionType[]>([]);
+  const positionEntities = useMemo(() => tabItemPositionToKeyEntities(tabItemPosition, nodes.length), [nodes, tabItemPosition]);
 
   const underlineStyle = useAnimatedStyle(() => {
     const currentItem = positionEntities[current]
@@ -46,20 +59,25 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
     }
   })
 
+  /**
+   * ios下 onlayout 不按照顺序的，这会导致我们onlayout计算错误
+   */
   const tabItemOnLayout = (e: LayoutChangeEvent, params: { index: number, key: string }) => {
     const width = e.nativeEvent.layout.width;
-    const { index, key } = params
-    const previousItemPosition = tabItemPosition.current[index - 1]?.position || 0;
-
-    tabItemPosition.current[index] = {
-      position: previousItemPosition + width,
+    const { index, key } = params;
+    const data = {
+      position: 0,
       width,
       key,
-    };
+      index: index
+    }
+    
+    const newArray = tabItemPosition.concat(data);
+    setTabItemPosition(newArray)
   }
 
   useEffect(() => {
-    if (Object.keys(positionEntities).length === 0) {
+    if (Object.keys(positionEntities).length !== nodes.length) {
       return;
     }
     const currentItem = positionEntities[current]

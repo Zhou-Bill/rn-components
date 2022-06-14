@@ -41,7 +41,7 @@ function useSwipe() {
   }
 
   const panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: () => true,
+    onMoveShouldSetPanResponder: () => true,  
     onPanResponderGrant: (e) => { 
       setIsTouched(true);
       setStartPos({
@@ -84,8 +84,13 @@ function useSwipe() {
         x: 0,
         y: 0,
       })
+
       distanceRef.current = offset;
-    }
+    },
+    onPanResponderTerminate: (evt, gestureState) => {
+      // 另一个组件已经成为了新的响应者，所以当前手势将被取消。
+    },
+    onPanResponderTerminationRequest: () => false
   })
 
   const resetToZero = () => {
