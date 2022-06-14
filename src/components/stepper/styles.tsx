@@ -29,6 +29,11 @@ export default StyleSheet.create({
     paddingHorizontal: 4,
   },
   'input': {
-    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
   }
 })
