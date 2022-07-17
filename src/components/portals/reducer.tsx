@@ -13,7 +13,7 @@ type RegisterHostType = {
 
 type UnregisterHostType = {
   type: 'UNREGISTER_HOST'
-  hostName: string
+  hostName: string,
 }
 
 type AddPortalType = {
@@ -36,7 +36,11 @@ type UnmountPortalType = {
   name: string,
 }
 
-type ReducerAction = RegisterHostType | UnregisterHostType | UpdatePortalType | UnmountPortalType | AddPortalType;
+type ReducerAction = UpdatePortalType 
+  | UnmountPortalType & { node?: ReactNode  } 
+  | AddPortalType
+  | RegisterHostType & PortalType 
+  | UnregisterHostType & PortalType;
 
 
 const reducer = (state: Record<string, Array<PortalType>>, action: ReducerAction) => {

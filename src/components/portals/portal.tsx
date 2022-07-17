@@ -2,13 +2,13 @@ import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useRef }
 import { ADD_PORTAL, UNMOUNT_PORTAL, UPDATE_PORTAL } from '../../constants';
 import { PortalDispatchContext } from './portalContext';
 
-interface PortalProps {
-  hostName: string,
-  name: string,
+export interface PortalProps {
+  hostName?: string,
+  name?: string,
   children: ReactNode,
-  onMount: (cb: () => void) => void,
-  onUnmount: (cb: () => void) => void,
-  onUpdate: (cb: () => void) => void,
+  onMount?: (cb: () => void) => void,
+  onUnmount?: (cb: () => void) => void,
+  onUpdate?: (cb: () => void) => void,
 }
 
 const generateKey = (length: number): string => {
@@ -18,7 +18,7 @@ const generateKey = (length: number): string => {
 }
 
 const Portal: React.FC<PortalProps> = (props: PortalProps) => {
-  const { hostName, name, onMount, onUnmount, onUpdate, children } = props;;
+  const { hostName = 'rootHost', name, onMount, onUnmount, onUpdate, children } = props;;
   const dispatch = useContext(PortalDispatchContext);
   const primaryKey = useMemo(() => name || generateKey(6), [name])
 

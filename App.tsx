@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
 import Swipe from './src/components/swipe';
 import SwipeCell, { SwipeCellRef } from './src/components/swipe-cell';
 import Switch from './src/components/switch';
@@ -9,6 +9,9 @@ import CountDown from './src/components/count-down';
 import Stepper from './src/components/stepper';
 import Tabs from './src/components/tabs';
 import Tree from './src/components/tree/tree';
+import { PortalProvider } from './src';
+import { show } from './src/components/toast';
+// import Toast from 'react-native-toast-message'
 
 const SwipeItem = Swipe.SwipeItem;
 
@@ -94,6 +97,7 @@ export default function App() {
   const ref = useRef<SwipeCellRef>(null);
   const [stepperValue, setStepperValue] = React.useState(0);
   const [tab, setTab] = React.useState(3);
+  const [visible, setVisible] = React.useState(false);
 
   const handleTabChange = (key: number | string) => {
     setTab(key as any);
@@ -106,6 +110,25 @@ export default function App() {
 
   const handleChange = (current: number) => {
     // console.log(current)
+  }
+  const onClick = () => {
+    show({
+      content: '123'
+    })
+  }
+
+  const onClick1 = () => {
+    show({
+      content: '123',
+      position: 'top'
+    })
+  }
+
+  const onClick2 = () => {
+    show({
+      content: '123',
+      position: 'bottom'
+    })
   }
 
   const leftAction = [
@@ -153,96 +176,77 @@ export default function App() {
   ]
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.center}>
-        <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
-          <SwipeItem>
-            <View style={[{ width: '100%' }]}>
-              <Image source={{uri: 'https://static.wikia.nocookie.net/doraemon/images/c/c4/%E5%93%86%E5%95%A6A%E5%A4%A2-0.jpg/revision/latest?cb=20190218095749&path-prefix=zh-tw'}} style={styles['swiper-item-image']} />
+    <PortalProvider>
+      <ScrollView style={styles.container}>
+        <View style={styles.center}>
+          <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
+            <SwipeItem>
+              <View style={[{ width: '100%' }]}>
+                <Image source={{uri: 'https://static.wikia.nocookie.net/doraemon/images/c/c4/%E5%93%86%E5%95%A6A%E5%A4%A2-0.jpg/revision/latest?cb=20190218095749&path-prefix=zh-tw'}} style={styles['swiper-item-image']} />
+              </View>
+            </SwipeItem>
+            <SwipeItem>
+              <View style={[{ width: '100%' }]}>
+                <Image source={{uri: 'https://img2.baidu.com/it/u=2284805420,4155623739&fm=26&fmt=auto'}} style={styles['swiper-item-image']} />
+              </View>
+            </SwipeItem>
+          </Swipe>
+        </View>
+        <View style={styles.center}>
+          <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
+            <SwipeItem>
+              <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
+                <Text style={styles['swiper-item-image']}>123123</Text>
+              </View>
+            </SwipeItem>
+            <SwipeItem>
+              <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
+                <Text style={styles['swiper-item-image']}>swipe2</Text>
+              </View>
+            </SwipeItem>
+          </Swipe>
+        </View>
+        <View style={{marginTop: 50}}>
+          <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
+            <View style={{ padding: 12 }}>
+              <Text>Text</Text>
             </View>
-          </SwipeItem>
-          <SwipeItem>
-            <View style={[{ width: '100%' }]}>
-              <Image source={{uri: 'https://img2.baidu.com/it/u=2284805420,4155623739&fm=26&fmt=auto'}} style={styles['swiper-item-image']} />
+          </SwipeCell>
+        </View>
+        <View style={{margin: 50}}>
+          <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
+            <View style={{ padding: 12 }}>
+              <Text>123</Text>
+              <Text>456</Text>
+              <Text>789</Text>
             </View>
-          </SwipeItem>
-        </Swipe>
-      </View>
-      <View style={styles.center}>
-        <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
-          <SwipeItem>
-            <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
-              <Text style={styles['swiper-item-image']}>123123</Text>
-            </View>
-          </SwipeItem>
-          <SwipeItem>
-            <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
-              <Text style={styles['swiper-item-image']}>swipe2</Text>
-            </View>
-          </SwipeItem>
-        </Swipe>
-      </View>
-      <View style={{marginTop: 50}}>
-        <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
-          <View style={{ padding: 12 }}>
-            <Text>Text</Text>
-          </View>
-        </SwipeCell>
-      </View>
-      <View style={{margin: 50}}>
-        <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
-          <View style={{ padding: 12 }}>
-            <Text>123</Text>
-            <Text>456</Text>
-            <Text>789</Text>
-          </View>
-        </SwipeCell>
-      </View>
-      <View style={{marginTop: 20}}>
-        <Switch />
-      </View>
-      <View style={{marginTop: 20}}>
-        <NoticeBar content={"我是通知栏我是通知栏我是通知栏我是"} scrollable />
-      </View>
-      <View style={{marginTop: 20}}>
-        <CountDown
-          count={24 * 60 * 60}
-          format="HH:mm:ss"
-        >
-          {(time, formatTime) => {
-            return (
-              <Text>{formatTime.formatTimeString}</Text>
-            )
-          }}
-        </CountDown>
-      </View>
-      <View style={{margin: 20}}>
-        <Stepper step={0.1} decimal={1} />
-      </View>
-      <View style={{margin: 20}}>
-        <Stepper value={stepperValue} onChange={handleStepperChange} max={5} min={-5} step={3} decimal={2} />
-      </View>
-      <Tabs scrollable current={tab} onChange={handleTabChange} animated>
-        <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
-        <Tabs.Pane title="哈哈哈">
-          <View style={{ backgroundColor: 'blue', height: 88}}>
-            <Text>hahhahhahah1231231231231232111111111</Text>
-          </View>
-        </Tabs.Pane>
-        <Tabs.Pane title="水果">
-          <View style={{ backgroundColor: 'green'}}>
-            <Text>hahhahhahah1231231231231232111111111</Text>
-            <Text>水果</Text>
-          </View>
-        </Tabs.Pane>
-        <Tabs.Pane title="菠萝"><Text>菠萝</Text></Tabs.Pane>
-        <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
-        <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
-        <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-      </Tabs>
-
-      {/* <View style={{margin: 20}}>
-        <Tabs scrollable animated>
+          </SwipeCell>
+        </View>
+        <View style={{marginTop: 20}}>
+          <Switch />
+        </View>
+        <View style={{marginTop: 20}}>
+          <NoticeBar content={"我是通知栏我是通知栏我是通知栏我是"} scrollable />
+        </View>
+        <View style={{marginTop: 20}}>
+          <CountDown
+            count={24 * 60 * 60}
+            format="HH:mm:ss"
+          >
+            {(time, formatTime) => {
+              return (
+                <Text>{formatTime.formatTimeString}</Text>
+              )
+            }}
+          </CountDown>
+        </View>
+        <View style={{margin: 20}}>
+          <Stepper step={0.1} decimal={1} />
+        </View>
+        <View style={{margin: 20}}>
+          <Stepper value={stepperValue} onChange={handleStepperChange} max={5} min={-5} step={3} decimal={2} />
+        </View>
+        <Tabs scrollable current={tab} onChange={handleTabChange} animated>
           <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
           <Tabs.Pane title="哈哈哈">
             <View style={{ backgroundColor: 'blue', height: 88}}>
@@ -260,10 +264,51 @@ export default function App() {
           <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
           <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
         </Tabs>
-      </View> */}
-      {/* <Text>123123</Text> */}
-      <Tree treeData={tree} />
-    </ScrollView>
+
+        {/* <View style={{margin: 20}}>
+          <Tabs scrollable animated>
+            <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
+            <Tabs.Pane title="哈哈哈">
+              <View style={{ backgroundColor: 'blue', height: 88}}>
+                <Text>hahhahhahah1231231231231232111111111</Text>
+              </View>
+            </Tabs.Pane>
+            <Tabs.Pane title="水果">
+              <View style={{ backgroundColor: 'green'}}>
+                <Text>hahhahhahah1231231231231232111111111</Text>
+                <Text>水果</Text>
+              </View>
+            </Tabs.Pane>
+            <Tabs.Pane title="菠萝"><Text>菠萝</Text></Tabs.Pane>
+            <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
+            <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
+            <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
+          </Tabs>
+        </View> */}
+        {/* <Text>123123</Text> */}
+        {/* <Tree treeData={tree} /> */}
+        <TouchableOpacity
+          onPress={onClick}
+        ><Text>123123</Text></TouchableOpacity>
+        <TouchableOpacity
+          onPress={onClick1}
+        ><Text>center Toast</Text></TouchableOpacity>
+         <TouchableOpacity
+          onPress={onClick2}
+        ><Text>Bottom Toast</Text></TouchableOpacity>
+        <Text>hhhhhhh</Text>
+        <Text>hhhhhhh</Text>
+        <Text>hhhhhhh</Text>
+        <Text>hhhhhhh</Text>
+        <Text>hhhhhhh</Text>
+
+      </ScrollView>
+      {/* <Toast
+        position='bottom'
+        bottomOffset={20}
+      /> */}
+      {/* <Toast content='21312312312313123' visible={visible} /> */}
+    </PortalProvider>
   );
 }
 
