@@ -8,11 +8,8 @@ const SCREEN_HEIGHT = Dimensions.get('screen').height;
 interface AnimationProps {
   children: React.ReactNode,
   visible: boolean,
-  /**
-   * 设定动画效果
-   */
-  // animation?: 'slide' | 'fade' | 'slideUp',
   position: 'top' | 'bottom' | 'center',
+  onAfterClose: () => void
 }
 
 /**
@@ -21,10 +18,10 @@ interface AnimationProps {
  */
 
 const Animation = (props: AnimationProps) => {
-  const { children, visible, position = "bottom" } = props;
+  const { children, visible, position = "bottom", onAfterClose } = props;
   const [innerVisible, setInnerVisible] = useState(false);
   const [layout, setLayout] = useState(null)
-
+  const isRunningClose = useRef(false)
   const animatedRef = useRef(new Animated.Value(0));
   const opacityAnimatedRef = useRef(new Animated.Value(0))
   const animation = ["top", "left", "right", "bottom"].includes(position) 
@@ -41,19 +38,31 @@ const Animation = (props: AnimationProps) => {
   }, [visible])
 
   useEffect(() => {
-    // 显示动画
-    if (!innerVisible || layout === null) {
+    // layout 改变可能会再次运行 onAfterClose
+    if (layout === null) {
       return
     } 
+    // 隐藏时
+    if (!innerVisible && !isRunningClose.current) {
+      isRunningClose.current = true
+      onAfterClose?.()
+      return;
+    }
+    
+    // 显示动画
     showAnimation()
+    isRunningClose.current = false
   }, [innerVisible, layout])
 
+  // display block to none still running
   const handleOnLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
-    setLayout({
-      width: width,
-      height: height
-    })
+    if (layout === null) {
+      setLayout({
+        width: width,
+        height: height
+      })
+    }
   }
 
   const showAnimation = () => {
@@ -98,7 +107,7 @@ const Animation = (props: AnimationProps) => {
   const animatedStyle = useMemo(() => {
     return {
       transform: [{
-        translateY: animatedRef.current 
+        translateY: animatedRef.current,
       }]
     }
     
@@ -106,7 +115,7 @@ const Animation = (props: AnimationProps) => {
 
   const opacityStyle = useMemo(() => {
     return {
-      opacity: opacityAnimatedRef.current
+      opacity: opacityAnimatedRef.current,
     }
   }, [])
 
@@ -117,6 +126,11 @@ const Animation = (props: AnimationProps) => {
         display: (innerVisible ? undefined : "none") as 'none',
       },
       animation === 'slide' ? animatedStyle : opacityStyle,
+      animation === 'fade' ? {
+        transform: [{
+          translateY: -layout?.height / 2 || 0
+        }]
+      } : {}
     ]
 
   return (

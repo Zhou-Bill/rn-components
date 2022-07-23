@@ -3,7 +3,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
-interface Iprops {
+export interface IconProps {
   /** 字体类型 */
   type?: "antdesign" | 'fontawesome'
   /** icon */
@@ -15,7 +15,7 @@ interface Iprops {
 }
 
 
-const CustomIcon: React.FC<Iprops> = (props: Iprops) => {
+const CustomIcon: React.FC<IconProps> = (props: IconProps) => {
   const { type = 'antdesign', name, size = 14, color = "#000" } = props
 
   const Icon = useMemo(() => {

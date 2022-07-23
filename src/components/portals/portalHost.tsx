@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useContext, useEffect, useImperativeHandle, useMemo } from 'react';
-import { ADD_PORTAL, REGISTER_HOST, UNREGISTER_HOST, UPDATE_PORTAL } from '../../constants';
+import { ADD_PORTAL, REGISTER_HOST, UNMOUNT_PORTAL, UNREGISTER_HOST, UPDATE_PORTAL } from '../../constants';
 import { PortalStateContext, PortalDispatchContext } from './portalContext';
 
 interface PortalHostProps {
@@ -9,7 +9,7 @@ interface PortalHostProps {
 export interface PortalHostRef {
   addPortal: (name: string, children: React.ReactNode) => void;
   updatePortal: (name: string, children: React.ReactNode) => void;
-
+  removePortal: (name: string) => void;
 }
 
 const PortalHost = React.forwardRef<PortalHostRef, PortalHostProps>((props: PortalHostProps, ref) => {
@@ -49,10 +49,20 @@ const PortalHost = React.forwardRef<PortalHostRef, PortalHostProps>((props: Port
     })
   }, [])
 
+  const removePortal = useCallback((name) => {
+    dispatch({
+      type: UNMOUNT_PORTAL,
+      hostName: hostName,
+      name: name,
+    })
+  }, [])
+
   useImperativeHandle(ref, () => {
     return {
       addPortal: addPortal,
-      updatePortal: updatePortal
+      updatePortal: updatePortal,
+      removePortal: removePortal
+
     }
   })
 
@@ -71,4 +81,4 @@ const PortalHost = React.forwardRef<PortalHostRef, PortalHostProps>((props: Port
   )
 })
 
-export default PortalHost;
+export default React.memo(PortalHost);

@@ -85,7 +85,7 @@ const reducer = (state: Record<string, Array<PortalType>>, action: ReducerAction
       if (!(action.hostName in state)) {
         return {...state}
       }
-      const list = state[action.hostName].filter((_item) => _item.name === action.name);
+      const list = state[action.hostName].filter((_item) => _item.name !== action.name);
       state[action.hostName] = list;
       return {...state}
     }

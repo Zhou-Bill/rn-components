@@ -62,7 +62,7 @@ const toFixed = (value: number, decimal: number): string => {
   return `${integer}.${fillZero(decimalNumber, decimal)}`
 }
 
-const Stepper= React.forwardRef<TextInput, StepperProps>(
+const Stepper = React.forwardRef<TextInput, StepperProps>(
   (props: StepperProps, ref) => {
     const { value, onChange, defaultValue, step = 1, min, max, decimal = 0 } = props
     const [innerValue, setInnerValue] = React.useState<string>(() => {

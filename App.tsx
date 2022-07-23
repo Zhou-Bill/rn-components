@@ -10,7 +10,7 @@ import Stepper from './src/components/stepper';
 import Tabs from './src/components/tabs';
 import Tree from './src/components/tree/tree';
 import { PortalProvider } from './src';
-import { show } from './src/components/toast';
+import Toast, { show, clear} from './src/components/toast';
 // import Toast from 'react-native-toast-message'
 
 const SwipeItem = Swipe.SwipeItem;
@@ -112,22 +112,30 @@ export default function App() {
     // console.log(current)
   }
   const onClick = () => {
-    show({
-      content: '123'
+    Toast.error({
+      content: '失败了',
+      isBase: false,
+      icon: null
     })
+    // show({
+    //   content: '123',
+    //   onClose: () => {
+    //     console.log(123)
+    //   },
+    //   onAfterClose: () => {
+    //     console.log("onAfterClose")
+    //   }
+    // })
   }
 
   const onClick1 = () => {
-    show({
-      content: '123',
-      position: 'top'
-    })
+    clear();
   }
 
   const onClick2 = () => {
-    show({
+    Toast.loading({
       content: '123',
-      position: 'bottom'
+      // position: 'bottom'
     })
   }
 

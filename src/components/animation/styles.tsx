@@ -5,7 +5,10 @@ export default StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    backgroundColor: 'yellow',
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: 'center'
   },
   top: {
     top: 0
@@ -14,6 +17,6 @@ export default StyleSheet.create({
     top: '50%',
   },
   bottom: {
-    bottom: 0
+    bottom: 0,
   }
 }) 

@@ -81,7 +81,12 @@ function useSwipe(options: Options) {
         y: 0,
       })
       setIsTouched(false);
-    }
+    },
+    onPanResponderTerminate: (evt, gestureState) => {
+      // 另一个组件已经成为了新的响应者，所以当前手势将被取消。
+    },
+    // http://t.zoukankan.com/foxNike-p-11119204.html
+    onPanResponderTerminationRequest: () => false
   })
 
   return { style, panResponder, containerWidth }

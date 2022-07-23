@@ -1,35 +1,35 @@
-import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useImperativeHandle, useRef, useState } from "react";
 import Portal from "../portals/portal";
 import { portalHostRef } from '../portals/portalProvider'
+import { ToastProps } from "./toast";
 
+export type ImperativeHandler = {
+  close: () => void,
+  replace: (element: React.FunctionComponentElement<ToastProps>) => void
+}
 
-const renderToast = (element) => {
-  const Wrapper = React.forwardRef((_, ref) => {
-    const [visible, setVisible] = useState(false)
+const renderToast = (element: React.FunctionComponentElement<ToastProps>) => {
+  const Wrapper = React.forwardRef<ImperativeHandler, any>((_, ref) => {
+    const [visible, setVisible] = useState(true)
     const [elementToRender, setElementToRender] = useState(element)
-    const closedRef = useRef(false)
     const keyRef = useRef(0);
 
-    useEffect(() => {
-      if (!closedRef.current) {
-        setVisible(true)
-      } else {
-        // afterClose()
-      }
-    }, [])
+    function afterClose() {
+      portalHostRef.current?.removePortal('toast')
+      elementToRender.props.onAfterClose?.()
+    }
 
     function onClose() {
-      closedRef.current = true
       setVisible(false)
       elementToRender.props.onClose?.()
     }
 
     useImperativeHandle(ref, () => ({
       close: onClose,
-      replace: element => {
+      replace: (ele: React.FunctionComponentElement<ToastProps>) => {
         keyRef.current++
-        elementToRender.props.afterClose?.()
-        setElementToRender(element)
+        elementToRender.props.onAfterClose?.()
+        setElementToRender(ele)
       },
     }))
    
@@ -37,21 +37,21 @@ const renderToast = (element) => {
       ...elementToRender.props,
       key: keyRef.current,
       visible,
+      onClose,
+      onAfterClose: afterClose,
     })
 
     return currentElement
 
   })
-  const wrapperRef = React.createRef<any>()
+  const wrapperRef = React.createRef<ImperativeHandler>()
   portalHostRef.current.addPortal('toast', <Wrapper ref={wrapperRef} /> )
   return {
-    close: wrapperRef.current?.close(),
+    close: () => { wrapperRef.current?.close() },
     replace: element => {
       wrapperRef.current?.replace(element)
     },
   }
-  // return Wrapper
-  
 }
 
 export default renderToast;
