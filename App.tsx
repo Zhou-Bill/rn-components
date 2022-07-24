@@ -11,6 +11,8 @@ import Tabs from './src/components/tabs';
 import Tree from './src/components/tree/tree';
 import { PortalProvider } from './src';
 import Toast from './src/components/toast';
+import Mask from './src/components/mask';
+import Popup from './src/components/popup';
 // import Toast from 'react-native-toast-message'
 
 const SwipeItem = Swipe.SwipeItem;
@@ -98,6 +100,7 @@ export default function App() {
   const [stepperValue, setStepperValue] = React.useState(0);
   const [tab, setTab] = React.useState(3);
   const [visible, setVisible] = React.useState(false);
+  const [popupVisible, setPopupVisible] = React.useState(false);
 
   const handleTabChange = (key: number | string) => {
     setTab(key as any);
@@ -112,6 +115,7 @@ export default function App() {
     // console.log(current)
   }
   const onClick = () => {
+    console.log(123);
     Toast.enhance({
       content: '失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了',
       isBase: false,
@@ -149,6 +153,14 @@ export default function App() {
         console.log("afterClose")
       }
     })
+  }
+
+  const onClick3 = () => {
+    setVisible(true)
+  }
+
+  const onClick4 = () => {
+    setPopupVisible(true);
   }
 
   const leftAction = [
@@ -197,8 +209,9 @@ export default function App() {
 
   return (
     <PortalProvider>
+      <View>
       <ScrollView style={styles.container}>
-        <View style={styles.center}>
+        {/* <View style={styles.center}>
           <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
             <SwipeItem>
               <View style={[{ width: '100%' }]}>
@@ -285,7 +298,7 @@ export default function App() {
           <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
         </Tabs>
 
-        {/* <View style={{margin: 20}}>
+        <View style={{margin: 20}}>
           <Tabs scrollable animated>
             <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
             <Tabs.Pane title="哈哈哈">
@@ -305,7 +318,6 @@ export default function App() {
             <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
           </Tabs>
         </View> */}
-        {/* <Text>123123</Text> */}
         {/* <Tree treeData={tree} /> */}
         <TouchableOpacity
           onPress={onClick}
@@ -313,31 +325,40 @@ export default function App() {
         <TouchableOpacity
           onPress={onClick1}
         ><Text>center Toast</Text></TouchableOpacity>
-         <TouchableOpacity
+        <TouchableOpacity
           onPress={onClick2}
-        ><Text>Bottom Toast</Text></TouchableOpacity>
+        >
+          <Text>Bottom Toast</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={onClick3}
+        >
+          <Text>mask</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={onClick4}
+        >
+          <Text>popup</Text>
+        </TouchableOpacity>
         <Text>hhhhhhh</Text>
         <Text>hhhhhhh</Text>
         <Text>hhhhhhh</Text>
-        <Text>hhhhhhh</Text>
-        <Text>hhhhhhh</Text>
-
+        <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
+          {/* <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text> */}
+        </Mask>
+        <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}/>
       </ScrollView>
-      {/* <Toast
-        position='bottom'
-        bottomOffset={20}
-      /> */}
-      {/* <Toast content='21312312312313123' visible={visible} /> */}
+      </View>
     </PortalProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     marginTop: 50,
-    backgroundColor: '#fff',
-    height: 366,
+    marginBottom: 100,
+    height: 445,
     // alignItems: 'center',
     // justifyContent: 'center',
   },

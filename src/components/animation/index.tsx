@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, Animated, Text, LayoutChangeEvent, Dimensions } from 'react-native'
+import { View, Animated, Text, LayoutChangeEvent } from 'react-native'
 import styles from './styles';
-
-const SCREEN_HEIGHT = Dimensions.get('screen').height;
-
-
 interface AnimationProps {
   children: React.ReactNode,
   visible: boolean,
@@ -43,15 +39,15 @@ const Animation = (props: AnimationProps) => {
       return
     } 
     // 隐藏时
-    if (!innerVisible && !isRunningClose.current) {
-      isRunningClose.current = true
+    if (!innerVisible) {
+      // isRunningClose.current = true
       onAfterClose?.()
       return;
     }
     
     // 显示动画
     showAnimation()
-    isRunningClose.current = false
+    // isRunningClose.current = false
   }, [innerVisible, layout])
 
   // display block to none still running
