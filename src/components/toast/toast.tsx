@@ -7,7 +7,7 @@ export interface ToastProps {
   /**
    * Toast title
    */
-  title?: string;
+  title?: React.ReactNode;
   /**
    * 内容区
    */
@@ -36,11 +36,24 @@ const ToastContainer: React.FC<ToastProps> = (props: ToastProps) => {
     content, 
     position = 'center', 
     visible, 
-    title = '', 
+    title = null, 
     icon = null,
     isBase = false, 
+    style = {},
     onAfterClose, 
   } = props
+
+  const renderTitle = () => {
+    if (title === null) {
+      return null
+    }
+    if (typeof title === 'string') {
+      return (
+        <Text style={styles['toast-title']}>{title}</Text>
+      )
+    }
+    return <>{title}</>
+  }
 
   return (
     <Animation
@@ -51,14 +64,12 @@ const ToastContainer: React.FC<ToastProps> = (props: ToastProps) => {
       <Animated.View 
         style={[
           styles.toast, 
-          isBase && styles.base,
+          isBase ? styles.base : styles.enhance,
+          icon === null && isBase ? styles['base-container'] : {},
+          style
         ]} 
       >
-        {
-          title && (
-            <Text>{title}</Text>
-          ) || null
-        }
+        {renderTitle()}
         {
           icon && (
             <View style={styles.icon}>
@@ -68,7 +79,7 @@ const ToastContainer: React.FC<ToastProps> = (props: ToastProps) => {
             </View>
           )
         }
-        <Text style={[styles.content, isBase && styles['base-content']]}>{content}</Text>
+        <Text style={[styles.content, isBase ? styles['base-content'] : styles['enhance-content'] ]}>{content}</Text>
       </Animated.View>
     </Animation>
   )

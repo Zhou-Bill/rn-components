@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Text } from "react-native";
 import { Icon } from "../..";
 import Spinning from "../animation/spinning";
 import Portal from "../portals/portal";
@@ -10,11 +11,14 @@ interface ToastConfigProps extends ToastProps  {
 
 type PartialPick<T extends Object, U extends keyof T> = Partial<Pick<T, U>>  & Omit<T, U>
 
+type FuncType = (props: PartialPick<ToastConfigProps, "visible">) => ImperativeHandler
+
 type StaticFunc = {
-  show: (props: PartialPick<ToastConfigProps, "visible">) => ImperativeHandler,
-  success: (props: PartialPick<ToastConfigProps, "visible">) => ImperativeHandler,
-  loading: (props: PartialPick<ToastConfigProps, "visible">) => ImperativeHandler,
-  error: (props: PartialPick<ToastConfigProps, "visible">) => ImperativeHandler,
+  show: FuncType,
+  success: FuncType,
+  loading: FuncType,
+  error: FuncType,
+  enhance: FuncType,
   clear: () => void
 }
 
@@ -29,12 +33,11 @@ const Toast: FC<ToastConfigProps> & StaticFunc = (props: ToastConfigProps) => {
   )
 }
 
-export function show(props: PartialPick<ToastConfigProps, "visible">) {
+function show(props: PartialPick<ToastConfigProps, "visible">) {
   const mergeProps = {
     duration: 3000,
     ...props,
   }
-  console.log("???")
   const element = (
     <ToastContainer
       {...mergeProps}
@@ -61,7 +64,7 @@ export function show(props: PartialPick<ToastConfigProps, "visible">) {
   return currentHandler
 }
 
-export function success(props: PartialPick<ToastProps, "visible">) {
+function success(props: PartialPick<ToastProps, "visible">) {
   return show({
     isBase: true,
     content: "保存成功",
@@ -91,7 +94,15 @@ function error(props: PartialPick<ToastProps, "visible">) {
   })
 }
 
-export function clear() {
+function enhance(props: PartialPick<ToastProps, "visible">) {
+  return show({
+    isBase: false,
+    content: '12312',
+    ...props,
+  })
+}
+
+function clear() {
   currentHandler?.close()
   currentHandler = null
   if (currentTimeout) {
@@ -105,6 +116,7 @@ Toast.clear = clear
 Toast.success = success
 Toast.loading = loading
 Toast.error = error
+Toast.enhance = enhance
 
 
 export default Toast;

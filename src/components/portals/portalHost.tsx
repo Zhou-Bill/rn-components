@@ -66,8 +66,6 @@ const PortalHost = React.forwardRef<PortalHostRef, PortalHostProps>((props: Port
     }
   })
 
-  console.log("length", nodes.length);
-
   return (
     <>
       {/* {nodes.map((_item) => _item.node)} */}

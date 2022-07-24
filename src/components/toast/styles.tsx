@@ -9,13 +9,32 @@ export default StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 8,
   },
+  'toast-title': {
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  enhance: {
+    backgroundColor: '#fff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    borderLeftWidth: 5,
+    borderLeftColor: '#69C779',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '90%'
+  },
   base: {
     display: 'flex',
     flexDirection: 'column',
     alignContent: 'center',
     justifyContent: 'center',
-    width: screenWidth - 160,
-    height: screenWidth - 160,
+    width: 200,
+    height: 200,
+  },
+  'base-container': {
+    width: undefined,
+    height: undefined,
   },
   icon: {
     display: 'flex',
@@ -24,12 +43,15 @@ export default StyleSheet.create({
     marginBottom: 16,
   },
   content: {
-    color: '#FFFFFF',
-    fontSize: 24,
+    color: '#fff',
   },
   'base-content': {
     textAlign: 'center',
     padding: 8,
+    fontSize: 24,
+  },
+  'enhance-content': {
+    fontSize: 12,
+    color: '#979797',
   }
-
 })

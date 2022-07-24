@@ -69,7 +69,7 @@ const Animation = (props: AnimationProps) => {
     const offset = {
       "top": 80,
       "center": -(layout?.height) / 2,
-      "bottom":-(80 + layout?.height),
+      "bottom":-(80 + layout?.height / 2),
     }
     if (animation === 'fade') {
       Animated.spring(opacityAnimatedRef.current, {
@@ -92,9 +92,11 @@ const Animation = (props: AnimationProps) => {
     const animationContainer = animation === 'fade' 
       ? opacityAnimatedRef.current
       : animatedRef.current
+
+    const offset = position === 'top' ? -layout.height : layout.height
  
     Animated.timing(animationContainer, {
-      toValue: 0,
+      toValue: animation === 'fade' ? 0 : offset,
       duration: 500,
       useNativeDriver: true
     }).start(({finished}) => {
