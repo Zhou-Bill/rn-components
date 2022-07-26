@@ -17,7 +17,7 @@ const Mask: React.FC<MaskProps> = (props: MaskProps) => {
   const { children, visible, inPortal = false, onAfterClose = null, onMaskClick } = props;
   const { opacityStyle, innerVisible } = useFadeAnimation({ visible, onAfterClose  })
 
-  const viewStyles =  [
+  const viewStyles = [
     {
       display: (innerVisible ? undefined : "none") as 'none',
     },
@@ -51,4 +51,4 @@ const Mask: React.FC<MaskProps> = (props: MaskProps) => {
   )
 }
 
-export default Mask
+export default React.memo(Mask)

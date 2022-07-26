@@ -28,7 +28,6 @@ const useSlideAnimation = (option: Options) => {
   }, [visible])
 
   useEffect(() => {
-
     // 隐藏时
     if (!innerVisible) {
       onAfterClose?.()
@@ -41,7 +40,7 @@ const useSlideAnimation = (option: Options) => {
 
   const showAnimation = () => {
     Animated.timing(translateRef.current, {
-      toValue: height,
+      toValue: direction === 'top' ? height : -height,
       duration: 500,
       useNativeDriver: true
     }).start();
@@ -81,7 +80,8 @@ const useSlideAnimation = (option: Options) => {
   return { 
     innerVisible: innerVisible, 
     transformStyle: transformStyle,
-    visibleStyle
+    visibleStyle,
+    isHorizontal,
   }
   
 }

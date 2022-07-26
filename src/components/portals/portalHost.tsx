@@ -73,7 +73,7 @@ const PortalHost = React.forwardRef<PortalHostRef, PortalHostProps>((props: Port
       {/* {nodes.map((_item) => _item.node)} */}
       {
         nodes.map((_item) => {
-          const currentNode = React.cloneElement(_item.node, { key: _item.name + new Date().valueOf()})
+          const currentNode = React.cloneElement(_item.node, { key: _item.name})
           return currentNode
         })
       }

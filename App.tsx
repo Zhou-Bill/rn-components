@@ -343,9 +343,9 @@ export default function App() {
         <Text>hhhhhhh</Text>
         <Text>hhhhhhh</Text>
         <Text>hhhhhhh</Text>
-        <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
-          {/* <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text> */}
-        </Mask>
+        {/* <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
+          <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text>
+        </Mask> */}
         <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}/>
       </ScrollView>
       </View>
