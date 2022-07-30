@@ -62,6 +62,7 @@ const Portal: React.FC<PortalProps> = (props: PortalProps) => {
   handleOnMountRef.current = handleOnMount;
 
   const handleOnUnMount = useCallback(() => {
+    console.log("onUnmount")
     if (onUnmount) {
       onUnmount(() => unMountPortal(primaryKey));
     } else {

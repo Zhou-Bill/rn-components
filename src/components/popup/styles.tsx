@@ -11,8 +11,8 @@ export default StyleSheet.create({
   },
   content: {
     position: "absolute",
-    left: 0,
-    right: 0,
+    // left: 0,
+    // right: 0,
     backgroundColor: '#fff',
     zIndex: 88,
   }

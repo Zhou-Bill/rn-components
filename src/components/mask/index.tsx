@@ -1,6 +1,5 @@
-import { render } from "@testing-library/react-native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { View, Animated, TouchableOpacity, Text } from "react-native";
+import React from "react";
+import { Animated, TouchableOpacity } from "react-native";
 import useFadeAnimation from "../../hooks/useFadeAnimation";
 import Portal from "../portals/portal";
 import styles from "./styles";
@@ -8,14 +7,15 @@ import styles from "./styles";
 interface MaskProps {
   visible: boolean,
   inPortal?: boolean,
+  duration?: number
   children?: React.ReactNode,
   onMaskClick?: () => void,
   onAfterClose?: () => void
 }
 
 const Mask: React.FC<MaskProps> = (props: MaskProps) => {
-  const { children, visible, inPortal = false, onAfterClose = null, onMaskClick } = props;
-  const { opacityStyle, innerVisible } = useFadeAnimation({ visible, onAfterClose  })
+  const { children, visible, inPortal = false, onAfterClose = null, onMaskClick, duration = 500 } = props;
+  const { opacityStyle, innerVisible } = useFadeAnimation({ visible, onAfterClose, duration  })
 
   const viewStyles = [
     {

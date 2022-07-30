@@ -3,11 +3,12 @@ import { Animated } from 'react-native'
 
 type Options = {
   visible: boolean,
+  duration: number,
   onAfterClose?: () => void
 }
 
 const useFadeAnimation = (option: Options) => {
-  const { visible, onAfterClose } = option
+  const { visible, duration, onAfterClose } = option
   const [innerVisible, setInnerVisible] = useState(false);
   const opacityAnimatedRef = useRef(new Animated.Value(0));
 
@@ -35,7 +36,7 @@ const useFadeAnimation = (option: Options) => {
   const showAnimation = () => {
     Animated.timing(opacityAnimatedRef.current, {
       toValue: 1,
-      duration: 500,
+      duration: duration,
       useNativeDriver: true
     }).start();
     return;
@@ -45,7 +46,7 @@ const useFadeAnimation = (option: Options) => {
   const disappearAnimation = () => {
     Animated.timing(opacityAnimatedRef.current, {
       toValue: 0,
-      duration: 500,
+      duration: duration,
       useNativeDriver: true
     }).start(({finished}) => {
       if (finished === true) {

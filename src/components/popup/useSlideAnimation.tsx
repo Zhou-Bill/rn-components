@@ -10,15 +10,17 @@ type Options = {
 }
 
 const useSlideAnimation = (option: Options) => {
-  const { visible, direction, onAfterClose, height } = option
+  const { visible, direction, onAfterClose, height, width } = option
   const [innerVisible, setInnerVisible] = useState(false);
   const translateRef = useRef(new Animated.Value(0));
+  const [isMounted, setIsMounted] = useState(false)
 
   const isHorizontal = useMemo(() => {
     return ['left', 'right'].includes(direction)
   }, [direction])
 
   useEffect(() => {
+    setIsMounted(true)
     if (visible) {
       setInnerVisible(visible)
       return;
@@ -39,8 +41,14 @@ const useSlideAnimation = (option: Options) => {
   }, [innerVisible])
 
   const showAnimation = () => {
+    const value = {
+      top: height,
+      bottom: -height,
+      left: width,
+      right: -width
+    }
     Animated.timing(translateRef.current, {
-      toValue: direction === 'top' ? height : -height,
+      toValue: value[direction],
       duration: 500,
       useNativeDriver: true
     }).start();
@@ -64,7 +72,7 @@ const useSlideAnimation = (option: Options) => {
     return {
       transform: [
         {
-          translateY: translateRef.current 
+          [key]: translateRef.current 
         }
       ]
     }
@@ -82,6 +90,7 @@ const useSlideAnimation = (option: Options) => {
     transformStyle: transformStyle,
     visibleStyle,
     isHorizontal,
+    isMounted,
   }
   
 }
