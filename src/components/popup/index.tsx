@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { View, Animated, Text } from 'react-native';
-import useFadeAnimation from '../../hooks/useFadeAnimation';
+import { View, Animated, Text, ScrollView } from 'react-native';
 import Mask from '../mask';
 import Portal from '../portals/portal';
 import styles from './styles';
@@ -20,13 +19,14 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = (props: PopupProps) => {
-  const { visible, inPortal = true, direction = 'right', height = 300, width = 220, onMaskClick, destroyOnClose = true  } = props;
+  const { visible, inPortal = true, direction = 'bottom', height = 300, width = 220, onMaskClick, destroyOnClose = true  } = props;
 
-  const { visibleStyle, transformStyle, isHorizontal, innerVisible, isMounted } =  useSlideAnimation({
+  const { visibleStyle, transformStyle, isHorizontal, innerVisible, isMounted, panResponder } =  useSlideAnimation({
     visible,
     direction,
     height,
-    width
+    width,
+    onMaskClick
   })
 
   const directionStyle = useMemo(() => {
@@ -58,12 +58,15 @@ const Popup: React.FC<PopupProps> = (props: PopupProps) => {
     return (
       <>
         <Mask visible={visible} onMaskClick={handleMaskClick} />
-        <Animated.View style={[styles.content, transformStyle as any , otherStyle]} >
+        <Animated.ScrollView {...panResponder.panHandlers}  style={[styles.content, transformStyle as any , otherStyle]} >
           <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
-        </Animated.View>
+          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
+          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
+          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
+        </Animated.ScrollView>
       </>
     )
-  }, [visible, visibleStyle, transformStyle, otherStyle])
+  }, [visible, visibleStyle, transformStyle, otherStyle, panResponder])
 
   const renderElement = () => {
     const element = inPortal ? Portal : React.Fragment;

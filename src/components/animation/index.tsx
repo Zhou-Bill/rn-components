@@ -17,7 +17,6 @@ const Animation = (props: AnimationProps) => {
   const { children, visible, position = "bottom", onAfterClose } = props;
   const [innerVisible, setInnerVisible] = useState(false);
   const [layout, setLayout] = useState(null)
-  const isRunningClose = useRef(false)
   const animatedRef = useRef(new Animated.Value(0));
   const opacityAnimatedRef = useRef(new Animated.Value(0))
   const animation = ["top", "left", "right", "bottom"].includes(position) 

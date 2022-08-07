@@ -13,6 +13,9 @@ import { PortalProvider } from './src';
 import Toast from './src/components/toast';
 import Mask from './src/components/mask';
 import Popup from './src/components/popup';
+import PullToRefresh from './src/components/pull-to-refresh';
+import Radio from './src/components/radio/radio';
+import { RadioGroup } from './src/components/radio';
 // import Toast from 'react-native-toast-message'
 
 const SwipeItem = Swipe.SwipeItem;
@@ -101,6 +104,11 @@ export default function App() {
   const [tab, setTab] = React.useState(3);
   const [visible, setVisible] = React.useState(false);
   const [popupVisible, setPopupVisible] = React.useState(false);
+  const [radioValue, setRadioValue] = React.useState("123");
+
+  const onRadioValueChange = (value) => {
+    setRadioValue(value)
+  }
 
   const handleTabChange = (key: number | string) => {
     setTab(key as any);
@@ -209,97 +217,78 @@ export default function App() {
 
   return (
     <PortalProvider>
-      <View>
-      <ScrollView style={styles.container}>
-        {/* <View style={styles.center}>
-          <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
-            <SwipeItem>
-              <View style={[{ width: '100%' }]}>
-                <Image source={{uri: 'https://static.wikia.nocookie.net/doraemon/images/c/c4/%E5%93%86%E5%95%A6A%E5%A4%A2-0.jpg/revision/latest?cb=20190218095749&path-prefix=zh-tw'}} style={styles['swiper-item-image']} />
+      <View style={styles.box}>
+        <PullToRefresh>
+        <ScrollView style={styles.container}>
+          <View style={[styles.center]} >
+            <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
+              <SwipeItem>
+                <View style={[{ width: '100%' }]}>
+                  <Image source={{uri: 'https://static.wikia.nocookie.net/doraemon/images/c/c4/%E5%93%86%E5%95%A6A%E5%A4%A2-0.jpg/revision/latest?cb=20190218095749&path-prefix=zh-tw'}} style={styles['swiper-item-image']} />
+                </View>
+              </SwipeItem>
+              <SwipeItem>
+                <View style={[{ width: '100%' }]}>
+                  <Image source={{uri: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_70%2Cc_zoom%2Cw_640%2Fupload%2F20170209%2Feeb4c8b4bede4f0eb1673d999b94c6d0_th.jpeg&refer=http%3A%2F%2Fimg.mp.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661871780&t=aba402f35f607fa432b1c06b5d1848f1'}} style={styles['swiper-item-image']} />
+                </View>
+              </SwipeItem>
+            </Swipe>
+          </View>
+          <View style={styles.center}>
+            <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
+              <SwipeItem>
+                <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
+                  <Text style={styles['swiper-item-image']}>123123</Text>
+                </View>
+              </SwipeItem>
+              <SwipeItem>
+                <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
+                  <Text style={styles['swiper-item-image']}>swipe2</Text>
+                </View>
+              </SwipeItem>
+            </Swipe>
+          </View>
+          <View style={{marginTop: 50}}>
+            <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
+              <View style={{ padding: 12 }}>
+                <Text>Text</Text>
               </View>
-            </SwipeItem>
-            <SwipeItem>
-              <View style={[{ width: '100%' }]}>
-                <Image source={{uri: 'https://img2.baidu.com/it/u=2284805420,4155623739&fm=26&fmt=auto'}} style={styles['swiper-item-image']} />
+            </SwipeCell>
+          </View>
+          <View style={{margin: 50}}>
+            <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
+              <View style={{ padding: 12 }}>
+                <Text>123</Text>
+                <Text>456</Text>
+                <Text>789</Text>
               </View>
-            </SwipeItem>
-          </Swipe>
-        </View>
-        <View style={styles.center}>
-          <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
-            <SwipeItem>
-              <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
-                <Text style={styles['swiper-item-image']}>123123</Text>
-              </View>
-            </SwipeItem>
-            <SwipeItem>
-              <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
-                <Text style={styles['swiper-item-image']}>swipe2</Text>
-              </View>
-            </SwipeItem>
-          </Swipe>
-        </View>
-        <View style={{marginTop: 50}}>
-          <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
-            <View style={{ padding: 12 }}>
-              <Text>Text</Text>
-            </View>
-          </SwipeCell>
-        </View>
-        <View style={{margin: 50}}>
-          <SwipeCell rightAction={rightAction} ref={ref} leftAction={leftAction}>
-            <View style={{ padding: 12 }}>
-              <Text>123</Text>
-              <Text>456</Text>
-              <Text>789</Text>
-            </View>
-          </SwipeCell>
-        </View>
-        <View style={{marginTop: 20}}>
-          <Switch />
-        </View>
-        <View style={{marginTop: 20}}>
-          <NoticeBar content={"我是通知栏我是通知栏我是通知栏我是"} scrollable />
-        </View>
-        <View style={{marginTop: 20}}>
-          <CountDown
-            count={24 * 60 * 60}
-            format="HH:mm:ss"
-          >
-            {(time, formatTime) => {
-              return (
-                <Text>{formatTime.formatTimeString}</Text>
-              )
-            }}
-          </CountDown>
-        </View>
-        <View style={{margin: 20}}>
-          <Stepper step={0.1} decimal={1} />
-        </View>
-        <View style={{margin: 20}}>
-          <Stepper value={stepperValue} onChange={handleStepperChange} max={5} min={-5} step={3} decimal={2} />
-        </View>
-        <Tabs scrollable current={tab} onChange={handleTabChange} animated>
-          <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
-          <Tabs.Pane title="哈哈哈">
-            <View style={{ backgroundColor: 'blue', height: 88}}>
-              <Text>hahhahhahah1231231231231232111111111</Text>
-            </View>
-          </Tabs.Pane>
-          <Tabs.Pane title="水果">
-            <View style={{ backgroundColor: 'green'}}>
-              <Text>hahhahhahah1231231231231232111111111</Text>
-              <Text>水果</Text>
-            </View>
-          </Tabs.Pane>
-          <Tabs.Pane title="菠萝"><Text>菠萝</Text></Tabs.Pane>
-          <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
-          <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
-          <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-        </Tabs>
-
-        <View style={{margin: 20}}>
-          <Tabs scrollable animated>
+            </SwipeCell>
+          </View>
+          <View style={{marginTop: 20}}>
+            <Switch />
+          </View>
+          <View style={{marginTop: 20}}>
+            <NoticeBar content={"我是通知栏我是通知栏我是通知栏我是"} scrollable />
+          </View>
+          <View style={{marginTop: 20}}>
+            <CountDown
+              count={24 * 60 * 60}
+              format="HH:mm:ss"
+            >
+              {(time, formatTime) => {
+                return (
+                  <Text>{formatTime.formatTimeString}</Text>
+                )
+              }}
+            </CountDown>
+          </View>
+          <View style={{margin: 20}}>
+            <Stepper step={0.1} decimal={1} />
+          </View>
+          <View style={{margin: 20}}>
+            <Stepper value={stepperValue} onChange={handleStepperChange} max={5} min={-5} step={3} decimal={2} />
+          </View>
+          <Tabs scrollable current={tab} onChange={handleTabChange} animated>
             <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
             <Tabs.Pane title="哈哈哈">
               <View style={{ backgroundColor: 'blue', height: 88}}>
@@ -317,48 +306,89 @@ export default function App() {
             <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
             <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
           </Tabs>
-        </View> */}
-        {/* <Tree treeData={tree} /> */}
-        <TouchableOpacity
-          onPress={onClick}
-        ><Text>123123</Text></TouchableOpacity>
-        <TouchableOpacity
-          onPress={onClick1}
-        ><Text>center Toast</Text></TouchableOpacity>
-        <TouchableOpacity
-          onPress={onClick2}
-        >
-          <Text>Bottom Toast</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={onClick3}
-        >
-          <Text>mask</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={onClick4}
-        >
-          <Text>popup</Text>
-        </TouchableOpacity>
-        <Text>hhhhhhh</Text>
-        <Text>hhhhhhh</Text>
-        <Text>hhhhhhh</Text>
-        {/* <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
-          <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text>
-        </Mask> */}
-        <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}/>
-      </ScrollView>
+
+          <View style={{margin: 20}}>
+            <Tabs scrollable animated>
+              <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
+              <Tabs.Pane title="哈哈哈">
+                <View style={{ backgroundColor: 'blue', height: 88}}>
+                  <Text>hahhahhahah1231231231231232111111111</Text>
+                </View>
+              </Tabs.Pane>
+              <Tabs.Pane title="水果">
+                <View style={{ backgroundColor: 'green'}}>
+                  <Text>hahhahhahah1231231231231232111111111</Text>
+                  <Text>水果</Text>
+                </View>
+              </Tabs.Pane>
+              <Tabs.Pane title="菠萝"><Text>菠萝</Text></Tabs.Pane>
+              <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
+              <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
+              <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
+            </Tabs>
+          </View>
+          <Tree treeData={tree} />
+          <TouchableOpacity
+            onPress={onClick}
+          ><Text>123123</Text></TouchableOpacity>
+          <TouchableOpacity
+            onPress={onClick1}
+          ><Text>center Toast</Text></TouchableOpacity>
+          <TouchableOpacity
+            onPress={onClick2}
+          >
+            <Text>Bottom Toast</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onClick3}
+          >
+            <Text>mask</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onClick4}
+          >
+            <Text>popup</Text>
+          </TouchableOpacity>
+          <Radio>
+            <Text>123123</Text>
+          </Radio>
+          <RadioGroup value={radioValue} onChange={onRadioValueChange}>
+            <Radio name="123">
+              <Text>123123</Text>
+            </Radio>
+            <Radio name="567">
+              <Text>456456</Text>
+            </Radio>
+            <Radio name="hahha">
+              <Text>456456</Text>
+            </Radio>
+          </RadioGroup>
+          <Text>hhhhhhh</Text>
+          <Text>hhhhhhh</Text>
+          <Text>hhhhhhh</Text>
+          {/* <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
+            <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text>
+          </Mask> */}
+          <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}/>
+        </ScrollView>
+        </PullToRefresh>
       </View>
     </PortalProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  box: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
   container: {
-    // flex: 1,
-    marginTop: 50,
+    flex: 1,
+    // marginTop: 50,
     marginBottom: 100,
-    height: 445,
+    // height: 445,
     // alignItems: 'center',
     // justifyContent: 'center',
   },
@@ -368,11 +398,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ccc'
-  },
-  box: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'red',
   },
   'swiper-item-image': {
     width: '100%',
