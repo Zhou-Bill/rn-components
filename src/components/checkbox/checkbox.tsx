@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, ViewStyle } from 'react-native';
 import Icon from '../icon';
-import styles from './radioStyle'
+import styles from './checkboxStyle'
 
 
-export interface RadioProps {
+export interface CheckboxProps {
   checked?: boolean;
   disabled?: boolean;
   children: React.ReactNode,
-  /** Radio Group 时有用 */
+  /** Checkbox Group 时有用 */
   name?: string | number
   onChange?: (val: boolean, name?: string | number) => void,
-  wrapStyles?: ViewStyle,
+  wrapStyles?: ViewStyle
 }
 
-const Radio: React.FC<RadioProps> = (props: RadioProps) => {
-  const { checked, onChange, children, name, wrapStyles } = props;
+const Checkbox: React.FC<CheckboxProps> = (props: CheckboxProps) => {
+  const { checked, onChange, children, name, wrapStyles = {} } = props;
   const [innerChecked, setInnerChecked] = useState(checked);
 
   useEffect(() => {
@@ -32,8 +32,8 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   }
 
   return (
-    <TouchableOpacity style={[styles.radio, wrapStyles]} activeOpacity={1} onPress={handleOnChange}>
-      <View style={[styles['radio-icon-container'], innerChecked ? styles['radio-icon-container-checked'] : {}]}>
+    <TouchableOpacity style={[styles.checkbox, wrapStyles]} activeOpacity={1} onPress={handleOnChange}>
+      <View style={[styles['checkbox-icon-container'], innerChecked ? styles['checkbox-icon-container-checked'] : {}]}>
         <Icon name="check" size={16} color="white" />
       </View>
       <>
@@ -43,6 +43,6 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   )
 }
 
-Radio.displayName = 'radio'
+Checkbox.displayName = 'checkbox'
 
-export default Radio
+export default Checkbox

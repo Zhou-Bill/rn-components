@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View } from 'react-native'
 import type { RadioProps } from './radio'
+import styles from './radioStyle'
 
 interface RadioGroupProps { 
   value: string | number,
@@ -34,7 +35,8 @@ const RadioGroup: React.FC<RadioGroupProps> = (props: RadioGroupProps) => {
           ...child.props,
           name: name,
           checked: innerValue === name,
-          onChange: handleOnChange
+          onChange: handleOnChange,
+          wrapStyles: index === 0 ? {} : styles["radio-group-item"]
         })
       }
       return child

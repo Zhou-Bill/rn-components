@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  'radio': {
+  'checkbox': {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
-  'radio-icon-container': {
+  'checkbox-icon-container': {
     width: 32,
     height: 32,
     borderRadius: 16,
@@ -18,10 +18,10 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
   },
-  'radio-icon-container-checked': {
+  'checkbox-icon-container-checked': {
     backgroundColor: '#1677ff'
   },
-  'radio-group-item': {
+  'checkbox-group-item': {
     marginTop: 8,
-  }
+  },
 })

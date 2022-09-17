@@ -16,6 +16,7 @@ import Popup from './src/components/popup';
 import PullToRefresh from './src/components/pull-to-refresh';
 import Radio from './src/components/radio/radio';
 import { RadioGroup } from './src/components/radio';
+import { Checkbox, CheckboxGroup } from './src/components/checkbox';
 // import Toast from 'react-native-toast-message'
 
 const SwipeItem = Swipe.SwipeItem;
@@ -105,10 +106,15 @@ export default function App() {
   const [visible, setVisible] = React.useState(false);
   const [popupVisible, setPopupVisible] = React.useState(false);
   const [radioValue, setRadioValue] = React.useState("123");
+  const [checkboxValue, setCheckboxValue] = React.useState([]);
 
   const onRadioValueChange = (value) => {
     setRadioValue(value)
   }
+
+  const onCheckBoxValueChange = (value) => {
+    setCheckboxValue(value)
+  } 
 
   const handleTabChange = (key: number | string) => {
     setTab(key as any);
@@ -366,6 +372,20 @@ export default function App() {
           <Text>hhhhhhh</Text>
           <Text>hhhhhhh</Text>
           <Text>hhhhhhh</Text>
+          <Checkbox>
+            <Text>123123</Text>
+          </Checkbox>
+          <CheckboxGroup value={checkboxValue} onChange={onCheckBoxValueChange}>
+            <Checkbox name="123">
+              <Text>123123</Text>
+            </Checkbox>
+            <Checkbox name="567">
+              <Text>456456</Text>
+            </Checkbox>
+            <Checkbox name="hahha">
+              <Text>456456</Text>
+            </Checkbox>
+          </CheckboxGroup>
           {/* <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
             <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text>
           </Mask> */}
