@@ -17,6 +17,9 @@ import PullToRefresh from './src/components/pull-to-refresh';
 import Radio from './src/components/radio/radio';
 import { RadioGroup } from './src/components/radio';
 import { Checkbox, CheckboxGroup } from './src/components/checkbox';
+import Cascader from './src/components/cascader';
+import { options } from './src/components/cascader/data';
+
 // import Toast from 'react-native-toast-message'
 
 const SwipeItem = Swipe.SwipeItem;
@@ -187,6 +190,11 @@ export default function App() {
     }
   ]
 
+  const handleCascader = (value, extend) => {
+    console.log(value);
+    setPopupVisible(false);
+  }
+
   const rightAction = [
     {
       key: 'mute',
@@ -294,7 +302,7 @@ export default function App() {
           <View style={{margin: 20}}>
             <Stepper value={stepperValue} onChange={handleStepperChange} max={5} min={-5} step={3} decimal={2} />
           </View>
-          <Tabs scrollable current={tab} onChange={handleTabChange} animated>
+          {/* <Tabs scrollable current={tab} onChange={handleTabChange} animated>
             <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
             <Tabs.Pane title="哈哈哈">
               <View style={{ backgroundColor: 'blue', height: 88}}>
@@ -311,10 +319,10 @@ export default function App() {
             <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
             <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
             <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-          </Tabs>
+          </Tabs> */}
 
           <View style={{margin: 20}}>
-            <Tabs scrollable animated>
+            {/* <Tabs scrollable animated>
               <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
               <Tabs.Pane title="哈哈哈">
                 <View style={{ backgroundColor: 'blue', height: 88}}>
@@ -331,7 +339,7 @@ export default function App() {
               <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
               <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
               <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-            </Tabs>
+            </Tabs> */}
           </View>
           <Tree treeData={tree} />
           <TouchableOpacity
@@ -389,7 +397,13 @@ export default function App() {
           {/* <Mask visible={visible} inPortal onMaskClick={() => setVisible(false)}>
             <Text>123了；看到；福利卡；代理费卡；老师的反馈；阿里上岛咖啡是</Text>
           </Mask> */}
-          <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}/>
+          {/* <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}/> */}
+          <Cascader 
+            visible={popupVisible} 
+            onMaskClick={() => setPopupVisible(false)} 
+            options={options} 
+            onConfirm={handleCascader} 
+          />
         </ScrollView>
         </PullToRefresh>
       </View>

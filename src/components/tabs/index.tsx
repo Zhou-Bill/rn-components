@@ -39,7 +39,7 @@ const Tabs: React.FC<ITabsProps> & { Pane: typeof TabPane } = (props: ITabsProps
   const { children, current = 0, onChange, scrollable = false, animated = false } = props
   const [innerValue, setInnerValue] = useState(current)
   const [containerWidth, setContainerWidth] = useState<number>(0)
-  const nodes = useMemo(() => traverseTree(children), []);
+  const nodes = useMemo(() => traverseTree(children), [children]);
 
   useEffect(() => {
     if ("current" in props) {

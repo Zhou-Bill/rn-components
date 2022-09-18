@@ -71,13 +71,20 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
       key,
       index: index
     }
-    
-    const newArray = tabItemPosition.concat(data);
-    setTabItemPosition(newArray)
+    const currentIndex = tabItemPosition.findIndex((x) => x.index === index);
+    if (currentIndex === -1) { 
+      const newArray = tabItemPosition.concat(data);
+      setTabItemPosition(newArray)
+      return
+    }
+    const newDataSource = [...tabItemPosition].slice(0)
+    newDataSource[currentIndex] = data;
+    setTabItemPosition(newDataSource)
+
   }
 
   useEffect(() => {
-    if (Object.keys(positionEntities).length !== nodes.length) {
+    if (Object.keys(positionEntities).length < nodes.length) {
       return;
     }
     const currentItem = positionEntities[current]

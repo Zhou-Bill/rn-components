@@ -12,6 +12,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     position: 'relative',
+    borderBottomColor: '#eee',
+    borderBottomWidth: 1,
   },
   'tabs-scrollView': {
     display: 'flex',

@@ -15,11 +15,24 @@ interface PopupProps {
    * 当visible 为false 时卸载组件
    */
   destroyOnClose?: boolean,
-  onMaskClick?: () => void
+  children: React.ReactNode,
+  scrollable?: boolean
+  onMaskClick?: () => void,
+
 }
 
 const Popup: React.FC<PopupProps> = (props: PopupProps) => {
-  const { visible, inPortal = true, direction = 'bottom', height = 300, width = 220, onMaskClick, destroyOnClose = true  } = props;
+  const { 
+    visible, 
+    inPortal = true, 
+    direction = 'bottom', 
+    height = 300, 
+    width = 220, 
+    onMaskClick, 
+    destroyOnClose = true, 
+    children, 
+    scrollable = true,
+  } = props;
 
   const { visibleStyle, transformStyle, isHorizontal, innerVisible, isMounted, panResponder } =  useSlideAnimation({
     visible,
@@ -58,15 +71,19 @@ const Popup: React.FC<PopupProps> = (props: PopupProps) => {
     return (
       <>
         <Mask visible={visible} onMaskClick={handleMaskClick} />
-        <Animated.ScrollView {...panResponder.panHandlers}  style={[styles.content, transformStyle as any , otherStyle]} >
-          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
-          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
-          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
-          <Text>dfa;sdfjkal;sdfjklasdjfklasjdflkajsdfkljsdlkfjalkdsfj</Text>
-        </Animated.ScrollView>
+        {
+          scrollable ? (
+            <Animated.ScrollView {...panResponder.panHandlers}  style={[styles.content, transformStyle as any , otherStyle]} >
+              <>
+                {children}
+              </>
+            </Animated.ScrollView>
+          ) : <Animated.View style={[styles.content, transformStyle as any, otherStyle]}><>{children}</></Animated.View>
+        }
+    
       </>
     )
-  }, [visible, visibleStyle, transformStyle, otherStyle, panResponder])
+  }, [visible, visibleStyle, transformStyle, otherStyle, panResponder, children, scrollable])
 
   const renderElement = () => {
     const element = inPortal ? Portal : React.Fragment;
