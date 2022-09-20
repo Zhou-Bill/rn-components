@@ -235,7 +235,7 @@ export default function App() {
         <PullToRefresh>
         <ScrollView style={styles.container}>
           <View style={[styles.center]} >
-            <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
+            <Swipe direction='horizontal' onChange={handleChange} >
               <SwipeItem>
                 <View style={[{ width: '100%' }]}>
                   <Image source={{uri: 'https://static.wikia.nocookie.net/doraemon/images/c/c4/%E5%93%86%E5%95%A6A%E5%A4%A2-0.jpg/revision/latest?cb=20190218095749&path-prefix=zh-tw'}} style={styles['swiper-item-image']} />
@@ -302,7 +302,7 @@ export default function App() {
           <View style={{margin: 20}}>
             <Stepper value={stepperValue} onChange={handleStepperChange} max={5} min={-5} step={3} decimal={2} />
           </View>
-          {/* <Tabs scrollable current={tab} onChange={handleTabChange} animated>
+          <Tabs scrollable current={tab} onChange={handleTabChange} animated>
             <Tabs.Pane title="123"><Text>123</Text></Tabs.Pane>
             <Tabs.Pane title="哈哈哈">
               <View style={{ backgroundColor: 'blue', height: 88}}>
@@ -319,7 +319,7 @@ export default function App() {
             <Tabs.Pane title="榴莲"><Text>榴莲</Text></Tabs.Pane>
             <Tabs.Pane title="榴莲榴莲榴莲1"><Text>榴莲</Text></Tabs.Pane>
             <Tabs.Pane title="我想吃KFC"><Text>我想吃KFC</Text></Tabs.Pane>
-          </Tabs> */}
+          </Tabs>
 
           <View style={{margin: 20}}>
             {/* <Tabs scrollable animated>
