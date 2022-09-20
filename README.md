@@ -66,5 +66,5 @@ yarn add rn-components-zzb
 
 ## 预览图
 
-<!-- ![预览图](https://i.ibb.co/58JqNhw/i-Shot-2022-09-20-21-05-33.gif) -->
-<img src="https://i.ibb.co/58JqNhw/i-Shot-2022-09-20-21-05-33.gif" alt="i-Shot-2022-09-20-21-05-33" border="0" />
+![预览图](https://i.ibb.co/58JqNhw/i-Shot-2022-09-20-21-05-33.gif)
+<!-- <img src="https://i.ibb.co/58JqNhw/i-Shot-2022-09-20-21-05-33.gif" alt="i-Shot-2022-09-20-21-05-33" border="0" /> -->
