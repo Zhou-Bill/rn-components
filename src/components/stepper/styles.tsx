@@ -35,5 +35,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     width: '100%',
+    textAlign: 'center',
   }
 })

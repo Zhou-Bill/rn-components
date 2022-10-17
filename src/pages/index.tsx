@@ -32,6 +32,14 @@ const Home: React.FC<Props> = (props: Props) => {
     {
       label: 'Cascader',
       value: 'Cascader' as keyof RootStackParamList
+    },
+    {
+      label: 'Stepper',
+      value: 'Stepper' as keyof RootStackParamList
+    },
+    {
+      label: 'Switch',
+      value: 'Switch' as keyof RootStackParamList
     }
   ]
 

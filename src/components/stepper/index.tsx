@@ -10,7 +10,7 @@ interface StepperProps {
   /** 
    * value 值
   */
-  value?: number,
+  value?: number | string,
   /**
    * 默认值
    */

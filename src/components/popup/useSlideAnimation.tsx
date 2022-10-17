@@ -57,9 +57,8 @@ const useSlideAnimation = (option: Options) => {
       left: width,
       right: -width
     }
-    Animated.timing(translateRef.current, {
+    Animated.spring(translateRef.current, {
       toValue: value[direction],
-      duration: 500,
       useNativeDriver: true
     }).start();
     return;

@@ -21,6 +21,8 @@ import ToastPage from './src/pages/toastPage';
 import SwipePage from './src/pages/swipePage';
 import SwipeCellPage from './src/pages/swipeCellPage';
 import CascaderPage from './src/pages/cascaderPage';
+import StepperPage from './src/pages/stepper';
+import SwitchPage from './src/pages/switchPage';
 
 const routers = [
   {
@@ -64,7 +66,21 @@ const routers = [
     options: {
       headerShown: false
     }
-  }
+  },
+  {
+    name: 'Stepper' as const,
+    component: StepperPage,
+    options: {
+      headerShown: false
+    }
+  },
+  {
+    name: 'Switch' as const,
+    component: SwitchPage,
+    options: {
+      headerShown: false
+    }
+  },
 ]
 
 
@@ -78,6 +94,8 @@ export type RootStackParamList = {
   Swipe: undefined,
   SwipeCell: undefined,
   Cascader: undefined,
+  Stepper: undefined,
+  Switch: undefined
 };
 
 
@@ -177,10 +195,6 @@ export default function App() {
     setCheckboxValue(value)
   } 
 
-  const handleTabChange = (key: number | string) => {
-    setTab(key as any);
-  }
-
   const handleStepperChange = (text: number | string) => {
     console.log("change")
     setStepperValue(text as unknown as number)
@@ -234,20 +248,6 @@ export default function App() {
     //     <PullToRefresh>
     //     <ScrollView style={styles.container}>
    
-    //       <View style={styles.center}>
-    //         <Swipe direction='horizontal' onChange={handleChange} width={300}  height={200} >
-    //           <SwipeItem>
-    //             <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
-    //               <Text style={styles['swiper-item-image']}>123123</Text>
-    //             </View>
-    //           </SwipeItem>
-    //           <SwipeItem>
-    //             <View style={[{ width: '100%', backgroundColor: '#fff' }]}>
-    //               <Text style={styles['swiper-item-image']}>swipe2</Text>
-    //             </View>
-    //           </SwipeItem>
-    //         </Swipe>
-    //       </View>
     //       <View style={{marginTop: 20}}>
     //         <Switch />
     //       </View>

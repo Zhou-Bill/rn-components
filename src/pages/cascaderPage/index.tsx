@@ -13,8 +13,8 @@ const CascaderPage = () => {
   }
 
   return (
-    <BasePage title="Toast">
-      <CellGroup title="toast" >
+    <BasePage title="级联选择">
+      <CellGroup title="基础用法" >
         <Cell onClick={() => setPopupVisible(true)} title="居中通知"/>
       </CellGroup>
 
