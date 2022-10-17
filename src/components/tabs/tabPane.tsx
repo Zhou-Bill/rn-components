@@ -3,8 +3,12 @@ import { View, Text } from 'react-native';
 
 export interface TabPaneProps {
   title: string,
-  index?: number,
-  children: React.ReactNode
+  index?: number | string,
+  children: React.ReactNode,
+  /**
+   * 是否禁用
+   */
+  disabled?: boolean
 }
 
 const TabPane: React.FC<TabPaneProps> = (props: TabPaneProps) => {

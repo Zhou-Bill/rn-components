@@ -69,7 +69,7 @@ function useSwipe(options: Options) {
       }   
 
       if (isRight) {
-        translateX.value =withTiming(-(currentIndex - 1) * containerWidth);
+        translateX.value = withTiming(-(currentIndex - 1) * containerWidth);
       } else {
         translateX.value = withTiming(-(currentIndex + 1) * containerWidth);
       }

@@ -25,7 +25,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 15,
+    bottom: 10,
     left: '50%',
     transform: [
       {

@@ -14,7 +14,7 @@ interface ITabsProps {
    */
   scrollable?: boolean,
   /** 
-   * 切换动画
+   * 切换动画, 是否有swipe
    */
   animated?: boolean,
   children?: React.ReactNode
@@ -36,7 +36,7 @@ const traverseTree = (children: React.ReactNode) => {
 }
 
 const Tabs: React.FC<ITabsProps> & { Pane: typeof TabPane } = (props: ITabsProps) => {
-  const { children, current = 0, onChange, scrollable = false, animated = false } = props
+  const { children, current = 0, onChange, scrollable = false, animated = false, canSwipe = true } = props
   const [innerValue, setInnerValue] = useState(current)
   const [containerWidth, setContainerWidth] = useState<number>(0)
   const nodes = useMemo(() => traverseTree(children), [children]);

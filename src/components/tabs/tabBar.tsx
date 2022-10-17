@@ -104,8 +104,11 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
     translateX.value = withTiming(position - width)
   }, [current, positionEntities])
 
-  const handlePress = (index: number) => {
-    onChange?.(index);
+  const handlePress = (item: any) => {
+    if (item.props.disabled) {
+      return;
+    }
+    onChange?.(item.index);
   }
 
   useDerivedValue(() => {
@@ -123,18 +126,19 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
         {
           nodes.map((_item: any, index) => {
             const isActive = current === _item.index;
+            const isDisabled = _item.props.disabled ?? false
             return (
               <TouchableOpacity 
                 activeOpacity={1}
                 key={_item.index} 
-                style={styles['tabs-header-item']} 
-                onPress={() => handlePress(_item.index)}
+                style={[styles['tabs-header-item']]} 
+                onPress={() => handlePress(_item)}
               >
                 <View
                   style={styles['tabs-header-item-content']} 
                   onLayout={(e) => tabItemOnLayout(e, { index, key: _item.index })}
                 >
-                  <Text style={[isActive ? {color: 'blue'} : {}]}>{_item.title}</Text>
+                  <Text style={[isActive ? {color: '#1677ff'} : {},  isDisabled ? styles['tabs-header-item-disabled'] : {}]}>{_item.title}</Text>
                 </View>
               </TouchableOpacity>
             )
@@ -154,7 +158,7 @@ const TabBar: React.FC<TabBarProps> = (props: TabBarProps) => {
         onContentSizeChange: onScrollViewLayout
       }
       : {}
-    return React.createElement(element, elementProps, elementChildren )
+    return React.createElement(element as any, elementProps, elementChildren )
   }
 
   return (

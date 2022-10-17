@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ReactElement, useMemo } from "react";
-import { View, Dimensions } from 'react-native'
+import { View, Dimensions, LayoutChangeEvent } from 'react-native'
 import SwipeItem, { ISwipeItemProps } from './swipe-item';
 import Animated from "react-native-reanimated";
 import styles from "./styles";
@@ -44,7 +44,9 @@ const traverseChild = (children: React.ReactNode) => {
 }
 
 const Swipe: React.FC<SwipeProps> & { SwipeItem: typeof SwipeItem } = (props: SwipeProps) => {
-  const { width = screenWidth, height = 300, direction = 'horizontal', children, onChange, renderDots, defaultIndex = 0 } = props;
+  const { width = screenWidth, direction = 'horizontal', children, onChange, renderDots, defaultIndex = 0 } = props;
+  const height = props.height || ( direction === 'horizontal' ? props.height : 200 )
+
   const count = React.Children.count(children)
   const isHorizontal = direction === 'horizontal';
   const { 
@@ -105,11 +107,13 @@ const Swipe: React.FC<SwipeProps> & { SwipeItem: typeof SwipeItem } = (props: Sw
       <>
         {
           childrenArray.map((child, index) => {
+            const withHeight = direction === 'horizontal' ? {} : {height: height}
             return React.cloneElement(child as any, {
               ...(child as ReactElement).props,
               key: index,
               width: width,
-              height: height
+              ...withHeight,
+              // height: height
             })
           })
         }
@@ -123,10 +127,10 @@ const Swipe: React.FC<SwipeProps> & { SwipeItem: typeof SwipeItem } = (props: Sw
         styles['swiper'],
         {
           width: width,
-          height: height,
-        }
-      ]
-    }>
+        },
+        height ? { height: height } : {}
+      ]}
+    >
       <>
         {/* @ts-ignore */}
         <Animated.View 

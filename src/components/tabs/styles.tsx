@@ -22,6 +22,9 @@ export default StyleSheet.create({
   'tabs-header-item': {
     flex: 1,
   },
+  'tabs-header-item-disabled': {
+    color: '#999',
+  },
   'tabs-header-item-content': {
     display: 'flex',
     flexDirection: 'row',
@@ -32,7 +35,7 @@ export default StyleSheet.create({
   },
   'underline': {
     height: 4,
-    backgroundColor: 'red',
+    backgroundColor: '#1677ff',
     position: 'absolute',
     bottom: 0,
     left: 0,
