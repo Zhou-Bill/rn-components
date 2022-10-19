@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TouchableWithoutFeedback, View, Animated, Text, Easing, LayoutChangeEvent } from 'react-native'
+import { TouchableOpacity, View, Animated, Text, Easing, LayoutChangeEvent } from 'react-native'
 import styles from './styles';
 
 interface Iprops {
@@ -11,12 +11,13 @@ interface Iprops {
 }
 
 const HANDLER_WIDTH = 22
+const DEFAULT_WIDTH = 48
 
 const Switch: React.FC<Iprops> = (props: Iprops) => {
   const { checked = false, disabled, onChange, openNode = null, closeNode = null } = props;
   const [innerState, setInnerState] = useState<boolean>(true);
   // 默认最小长度48
-  const [trackWidth, setTrackWidth] = useState(48);
+  const [trackWidth, setTrackWidth] = useState(DEFAULT_WIDTH);
   const offset = useRef(new Animated.Value(checked ? 1 : 0)).current;
 
   const handleChange = () => {
@@ -26,9 +27,8 @@ const Switch: React.FC<Iprops> = (props: Iprops) => {
     const current = !innerState;
     Animated.timing(offset, {
       toValue: current ? 1 : 0,
-      duration: 150,
+      duration: 200,
       useNativeDriver: false,
-      easing: Easing.linear,
     }).start();
 
     if (!("checked" in props)) {
@@ -41,21 +41,23 @@ const Switch: React.FC<Iprops> = (props: Iprops) => {
   }
 
   useEffect(() => {
-    setInnerState(checked)
+    setInnerState(checked);
   }, [checked])
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width } = event.nativeEvent.layout;
     // trackRef.current = width;
-    setTrackWidth(width)
+    setTrackWidth(width || 12)
   }
 
   return (
-    <TouchableWithoutFeedback onPress={handleChange}>
-      <View style={[styles.switch]} onLayout={onLayout}>
+    <TouchableOpacity activeOpacity={1} onPress={handleChange}>
+      <View style={[styles.switch, { width: DEFAULT_WIDTH + trackWidth - HANDLER_WIDTH / 2 - 6}]}>
         <Animated.View style={[styles.track, innerState ? styles.isActive : {}]}>
           <Animated.View
+            onLayout={onLayout}
             style={{
+              borderRadius: 100,
               marginLeft: offset.interpolate({
                 inputRange: [0, 1],
                 outputRange: [HANDLER_WIDTH, 8],
@@ -66,11 +68,9 @@ const Switch: React.FC<Iprops> = (props: Iprops) => {
               }),
             }}
           >
-            <>
-              {
-                checked ? openNode : closeNode
-              }
-            </>
+            {
+              innerState ? openNode : closeNode
+            }
           </Animated.View>
         </Animated.View>
         <Animated.View 
@@ -80,14 +80,14 @@ const Switch: React.FC<Iprops> = (props: Iprops) => {
               transform: [{
                 translateX: offset.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [0, trackWidth - HANDLER_WIDTH],
+                  outputRange: [0, trackWidth + HANDLER_WIDTH / 2 - 2],
                 }),
               }],
             }
           ]} 
         />
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   )
 }
 

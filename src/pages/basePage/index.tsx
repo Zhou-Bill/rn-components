@@ -17,9 +17,9 @@ const BasePage = (props: Props) => {
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} >
-      <View style={[{flex: 1}, viewStyles]}>
+      <View style={[{flex: 1}]}>
         <Header title={title} onIconClick={handleOnBack}  />
-        <ScrollView style={{backgroundColor: '#f7f8fa'}}>
+        <ScrollView style={[{backgroundColor: '#f7f8fa'}, viewStyles]}>
           {children}
         </ScrollView>
       </View>
