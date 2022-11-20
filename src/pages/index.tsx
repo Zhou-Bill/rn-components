@@ -40,6 +40,10 @@ const Home: React.FC<Props> = (props: Props) => {
     {
       label: 'Switch',
       value: 'Switch' as keyof RootStackParamList
+    },
+    {
+      label: 'Calendar',
+      value: 'Calendar' as keyof RootStackParamList
     }
   ]
 

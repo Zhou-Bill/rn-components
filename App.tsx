@@ -23,6 +23,7 @@ import SwipeCellPage from './src/pages/swipeCellPage';
 import CascaderPage from './src/pages/cascaderPage';
 import StepperPage from './src/pages/stepper';
 import SwitchPage from './src/pages/switchPage';
+import CalendarPage from './src/pages/calendarPage';
 
 const routers = [
   {
@@ -81,6 +82,13 @@ const routers = [
       headerShown: false
     }
   },
+  {
+    name: 'Calendar' as const,
+    component: CalendarPage,
+    options: {
+      headerShown: false
+    }
+  },
 ]
 
 
@@ -95,7 +103,8 @@ export type RootStackParamList = {
   SwipeCell: undefined,
   Cascader: undefined,
   Stepper: undefined,
-  Switch: undefined
+  Switch: undefined,
+  Calendar: undefined,
 };
 
 

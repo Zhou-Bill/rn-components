@@ -67,7 +67,7 @@ const Stepper = React.forwardRef<TextInput, StepperProps>(
     const { value, onChange, defaultValue, step = 1, min, max, decimal = 0 } = props
     const [innerValue, setInnerValue] = React.useState<string>(() => {
       if ('value' in props) {
-        return toFixed(value!, decimal);
+        return toFixed(value! as number, decimal);
       }
       if ('defaultValue' in props) {
         return toFixed(defaultValue!, decimal);
